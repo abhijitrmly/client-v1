@@ -13,6 +13,7 @@
     "@feathersjs/authentication-client": "^4.5.11",
     "@feathersjs/feathers": "^4.5.11",
     "@feathersjs/rest-client": "^4.5.11",
+    "@tailwindcss/forms": "^0.2.1",
     "axios": "^0.21.1",
     "cookie-storage": "^6.1.0",
     "date-fns": "^2.16.1",
