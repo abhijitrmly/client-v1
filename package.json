@@ -8,6 +8,16 @@
     "start": "next start"
   },
   "dependencies": {
+    "@feathersjs/authentication-client": "^4.5.11",
+    "@feathersjs/feathers": "^4.5.11",
+    "@feathersjs/rest-client": "^4.5.11",
+    "axios": "^0.21.1",
+    "cookie-storage": "^6.1.0",
+    "date-fns": "^2.16.1",
+    "feathers-findone": "^1.0.2",
+    "js-cookie": "^2.2.1",
+    "jwt-decode": "^3.1.2",
+    "localforage": "^1.9.0",
     "next": "10.0.6",
     "prop-types": "^15.7.2",
     "react": "17.0.1",
