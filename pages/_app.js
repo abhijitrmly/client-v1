@@ -20,7 +20,7 @@ export default MyApp;
 
 MyApp.propTypes = {
   // eslint-disable-next-line react/require-default-props
-  Component: PropTypes.Component,
+  Component: PropTypes.elementType,
   // eslint-disable-next-line react/forbid-prop-types
   pageProps: PropTypes.object,
 };
