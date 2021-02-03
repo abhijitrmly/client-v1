@@ -2,7 +2,7 @@ import React from 'react';
 import { Formik, Form, ErrorMessage } from 'formik';
 import 'twin.macro';
 
-import { AuthStyledFormField } from '../blocks/StyledFormium';
+import { AuthStyledFormField, AuthStyledForm } from '../blocks/StyledFormium';
 import { StyledFormSubmitButton } from '../blocks/Buttons';
 
 const SignUpForm = () => (
@@ -27,21 +27,21 @@ const SignUpForm = () => (
     }}
   >
     {({ isSubmitting }) => (
-      <Form>
-        <div tw="mt-8 space-y-6">
-          <label htmlFor="email-address" tw="sr-only">Email address</label>
-          <AuthStyledFormField type="email" name="email" />
-          <ErrorMessage name="email" component="div" />
+      <AuthStyledForm>
+        <div tw="rounded-md shadow-sm -space-y-px">
+          <div tw="mt-8 space-y-6">
+            <label htmlFor="email-address" tw="sr-only">Email address</label>
+            <AuthStyledFormField type="email" name="email" placeholder="Email address" />
+            <ErrorMessage name="email" component="div" />
+          </div>
+          <div>
+            <label htmlFor="password" tw="sr-only">Password</label>
+            <AuthStyledFormField type="password" name="password" placeholder="Password" />
+            <ErrorMessage name="password" component="div" />
+          </div>
         </div>
-        <div>
-          <label htmlFor="password" tw="sr-only">Password</label>
-          <AuthStyledFormField type="password" name="password" />
-          <ErrorMessage name="password" component="div" />
-        </div>
-        <StyledFormSubmitButton disabled={isSubmitting}>
-          Submit
-        </StyledFormSubmitButton>
-      </Form>
+        <StyledFormSubmitButton disabled={isSubmitting} buttonTitle="Submit" />
+      </AuthStyledForm>
     )}
   </Formik>
 );

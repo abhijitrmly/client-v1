@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Field } from 'formik';
+import { Field, Form } from 'formik';
 import 'twin.macro';
 
 // eslint-disable-next-line import/prefer-default-export
@@ -17,3 +17,11 @@ AuthStyledFormField.propTypes = {
   placeholder: PropTypes.string,
   name: PropTypes.string.isRequired,
 };
+
+export const AuthStyledForm = ({ children }) => (
+  <Form
+    tw="mt-8 space-y-6"
+  >
+    {children}
+  </Form>
+);
