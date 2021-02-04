@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-filename-extension */
 /* eslint-disable react/require-default-props */
 import React from 'react';
-import PropTypes from 'prop-types';
+import { elementType, object } from 'prop-types';
 
 import StoreProvider from '../store';
 import GlobalStyles from '../components/GlobalStyles';
@@ -20,7 +20,7 @@ export default MyApp;
 
 MyApp.propTypes = {
   // eslint-disable-next-line react/require-default-props
-  Component: PropTypes.elementType,
+  Component: elementType,
   // eslint-disable-next-line react/forbid-prop-types
-  pageProps: PropTypes.object,
+  pageProps: object,
 };

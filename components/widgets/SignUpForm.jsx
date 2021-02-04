@@ -1,6 +1,7 @@
 import React from 'react';
 import { Formik, Form, ErrorMessage } from 'formik';
 import 'twin.macro';
+import { func } from 'prop-types';
 
 import { AuthStyledFormField, AuthStyledForm } from '../blocks/StyledFormium';
 import { StyledFormSubmitButton } from '../blocks/Buttons';
@@ -48,3 +49,7 @@ const SignUpForm = ({ onSubmit }) => (
 );
 
 export default SignUpForm;
+
+SignUpForm.propTypes = {
+  onSubmit: func,
+};
