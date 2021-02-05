@@ -112,6 +112,11 @@ export const CustomCriterion = ({
   customCriterionPlaceholder,
   customCriterionInputName,
   customCriterionRadioOptionArray,
+  customCriterionAnswerTypeName,
+  customCriterionBooleanAnswer,
+  customCriterionQuantMinValueName,
+  customCriterionQuantMaxValueName,
+  customCriterionQuantLabelName
 }) => (
   <div tw="mt-4">
     <div tw="flex items-center h-5">
@@ -127,17 +132,79 @@ export const CustomCriterion = ({
           isTextArea
         />
       </div>
-      {customCriterionRadioOptionArray.length && (
-      <div tw="flex items-end mt-2 space-x-12 space-y-2">
-        {customCriterionRadioOptionArray.map(({ radioName, radioLabelText, radioLabelId }) => (
-          <CustomCriterionRadioWrapper
-            radioName={radioName}
-            radioLabelText={radioLabelText}
-            radioLabelId={radioLabelId}
-          />
-        ))}
+      <div tw="space-y-2 mt-4">
+        <div tw="flex items-start">
+          <div tw="flex items-center h-5">
+            <QuestionCheckboxField
+              name={customCriterionAnswerTypeName}
+            />
+          </div>
+          <div tw="ml-3 text-base">
+            <SecondaryLabel
+              secondaryQuestion="Is the expected answer Yes/No type or a quantifiable value?"
+              id={customCriterionAnswerTypeName}
+            />
+          </div>
+        </div>
+        {customCriterionRadioOptionArray.length && (
+        <div tw="flex items-end space-x-12">
+          {customCriterionRadioOptionArray.map(({ radioName, radioLabelText, radioLabelId }) => (
+            <CustomCriterionRadioWrapper
+              radioName={radioName}
+              radioLabelText={radioLabelText}
+              radioLabelId={radioLabelId}
+            />
+          ))}
+        </div>
+        )}
+        {
+          customCriterionBooleanAnswer ? (
+            <div tw="flex items-start">
+              <div tw="flex items-center h-5">
+                <QuestionCheckboxField
+                  name={customCriterionAnswerTypeName}
+                />
+              </div>
+              <div tw="ml-3 text-base">
+                <SecondaryLabel
+                  secondaryQuestion="Is the expected answer Yes/No type or a quantifiable value?"
+                  id={customCriterionAnswerTypeName}
+                />
+              </div>
+            </div>
+          ) : (
+            <div tw="grid grid-cols-3 gap-4">
+              <div>
+                <SecondaryLabel
+                  secondaryQuestion="Mimumum acceptable quantity?"
+                  id={customCriterionQuantMinValueName}
+                />
+                <StyledInputField
+                  name={customCriterionQuantMinValueName}
+                />
+              </div>
+              <div>
+                <SecondaryLabel
+                  secondaryQuestion="Maximum acceptable quantity?"
+                  id={customCriterionQuantMaxValueName}
+                />
+                <StyledInputField
+                  name={customCriterionQuantMaxValueName}
+                />
+              </div>
+              <div>
+                <SecondaryLabel
+                  secondaryQuestion="Unit of quantity"
+                  id={customCriterionQuantLabelName}
+                />
+                <StyledInputField
+                  name={customCriterionQuantLabelName}
+                />
+              </div>
+            </div>
+          )
+        }
       </div>
-      )}
     </div>
   </div>
 );

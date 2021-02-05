@@ -37,11 +37,11 @@ const NewCustomerTransaction = (props) => {
               customCriterionInputName="test.2"
               customCriterionRadioOptionArray={[{
                 radioName: 'testradio',
-                radioLabelText: 'show',
+                radioLabelText: 'Yes/No',
                 radioLabelId: '1',
               }, {
                 radioName: 'testradio2',
-                radioLabelText: 'tell',
+                radioLabelText: 'Quantifiable',
                 radioLabelId: '2',
               }]}
             />
