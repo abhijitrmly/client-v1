@@ -5,6 +5,7 @@ import {
   QuestionCheckboxField,
   StyledInputField,
   StyledRadioField,
+  StyledSelectField,
 } from '../blocks/StyledFormium';
 
 import {
@@ -12,6 +13,8 @@ import {
   PrimarySubtext,
   SecondaryLabel,
   RadioLabel,
+  PrimaryText,
+  StyledOption,
 } from '../blocks/DisplayBlocks';
 
 export const PredefinedCriterionCheckbox = ({
@@ -116,7 +119,7 @@ export const CustomCriterion = ({
   customCriterionBooleanAnswer,
   customCriterionQuantMinValueName,
   customCriterionQuantMaxValueName,
-  customCriterionQuantLabelName
+  customCriterionQuantLabelName,
 }) => (
   <div tw="mt-4">
     <div tw="flex items-center h-5">
@@ -204,6 +207,68 @@ export const CustomCriterion = ({
             </div>
           )
         }
+      </div>
+    </div>
+  </div>
+);
+
+export const CertificationCheckboxField = ({
+  certificationsArray,
+  supplierName,
+  productName,
+  productsArray
+}) => (
+  <div tw="space-y-6">
+    <div tw="space-y-1">
+      <PrimaryLabel
+        primaryQuestion="Please enter email of customer"
+        id={supplierName}
+      />
+      <StyledInputField
+        name={supplierName}
+      />
+    </div>
+    <div tw="space-y-1">
+      <PrimaryLabel
+        primaryQuestion="Please select product to apply certification"
+        id={productName}
+      />
+      <StyledSelectField
+        name={productName}
+      >
+        {productsArray.map(({ productName, productLabel }) => (
+          <StyledOption
+            value={productName}
+            label={productLabel}
+          />
+        ))}
+        <StyledOption
+          value=""
+        />
+      </StyledSelectField>
+    </div>
+    <div>
+      <PrimaryText
+        primaryText="Check all certifications whose criteria you would like to consider"
+      />
+      <div tw="mt-2">
+        {
+      certificationsArray.map(({ certificationName, certificationLabel }) => (
+        <div tw="flex mt-1 items-start">
+          <div tw="flex items-center h-5">
+            <QuestionCheckboxField
+              name={certificationName}
+            />
+          </div>
+          <div tw="ml-3 -mt-0.5 text-base">
+            <PrimaryLabel
+              primaryQuestion={certificationLabel}
+              id={certificationName}
+            />
+          </div>
+        </div>
+      ))
+    }
       </div>
     </div>
   </div>

@@ -50,6 +50,10 @@ export const PrimarySubtext = ({ primaryQuestionSubtext }) => (
   <p tw="text-base text-gray-500">{primaryQuestionSubtext}</p>
 );
 
+export const PrimaryText = ({ primaryText }) => (
+  <p tw="font-medium text-base text-gray-700">{primaryText}</p>
+);
+
 export const StyledOption = ({ value, label }) => (
   <option value={value}>{label}</option>
 );
