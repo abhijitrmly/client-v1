@@ -93,11 +93,14 @@ const CertificationSelector = () => {
             productLabel: 'Cotton',
           },
         ]}
+        supplierName="supplierName"
+        productName="productName"
       />
     </>
   );
 };
 
+// @TODO add button to remove custom criterion
 const AddCustomCriteria = ({ criteriaCategory }) => {
   const {
     setFieldValue, values = {},
@@ -129,11 +132,27 @@ const NewCustomerTransaction = () => {
       </Head>
       <main>
         <Formik
-          initialValues={{ customCriteria: {} }}
+          initialValues={{ customCriteria: {}, supplierName: '', productName: 'Cotton' }}
         >
           {({ isSubmitting, values = {} }) => (
             <Form>
               <div>
+                <header tw="bg-white shadow">
+                  <div tw="flex justify-between py-6 px-4 sm:px-6 lg:px-8">
+                    <h1 tw="text-3xl font-bold leading-tight text-gray-900">
+                      New Compliance Transaction
+                    </h1>
+                    <span>
+                      <button type="submit" disabled={isSubmitting} tw="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        <svg tw="-ml-1 mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                        </svg>
+                        Submit requirement
+                      </button>
+                    </span>
+                  </div>
+                </header>
+
                 {JSON.stringify(values)}
                 <SectionCardWrapper>
                   <LeftCardWrapper>
