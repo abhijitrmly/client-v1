@@ -28,6 +28,7 @@ const SupplierTransactionForm = () => {
 
   const [transactionData, setTransactionData] = useState({});
   const [certificationsData, setCertificationsData] = useState([]);
+  const [certificationFormVisibility, setCertificationForm] = useState(false);
 
   const TransactionsService = useService('transaction');
   const BusinessCertificationsService = useService('business-certifications');
@@ -67,6 +68,7 @@ const SupplierTransactionForm = () => {
       </Head>
       <main>
         <div>
+          {certificationFormVisibility && (
           <Formik
             initialValues={{}}
             onSubmit={async (values) => {
@@ -97,13 +99,13 @@ const SupplierTransactionForm = () => {
                           certificationName="baseStandard"
                           newRecordId="certificationId"
                           certificationsArray={Object.entries(certificationObject).map(
-                            ([certificationId, name]) => (
-                              {
-                                certificationId,
-                                certificationLabel: name,
-                              }
-                            ),
-                          )}
+                  ([certificationId, name]) => (
+                    {
+                      certificationId,
+                      certificationLabel: name,
+                    }
+                  ),
+                )}
                         />
                       </div>
                       <AddCertificationCardFooter />
@@ -113,6 +115,7 @@ const SupplierTransactionForm = () => {
               </Form>
             )}
           </Formik>
+          )}
         </div>
       </main>
     </div>
