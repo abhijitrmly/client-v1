@@ -4,6 +4,10 @@ import { element, string, boolean } from 'prop-types';
 import { Field, Form } from 'formik';
 import 'twin.macro';
 
+import {
+  StyledOption,
+} from './DisplayBlocks';
+
 export const AuthStyledFormField = ({ placeholder = '', name }) => (
   <Field
     placeholder={placeholder}
@@ -50,14 +54,18 @@ QuestionCheckboxField.propTypes = {
   name: string.isRequired,
 };
 
-export const StyledSelectField = ({ name, children }) => (
-  <Field name={name} as="select" tw="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-    {children}
+export const StyledSelectField = ({ name, certificationsArray = [] }) => (
+  <Field name={name} as="select" tw="mt-1 block w-3/4 py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+    {certificationsArray.map(({ certificationId, certificationLabel }) => (
+      <StyledOption
+        value={certificationId}
+        label={certificationLabel}
+      />
+    ))}
   </Field>
 );
 
 StyledSelectField.propTypes = {
-  children: element,
   name: string.isRequired,
 };
 
@@ -91,5 +99,5 @@ export const StyledRadioField = ({ name, value }) => (
 
 StyledRadioField.propTypes = {
   name: string.isRequired,
-  value: string.isRequired
+  value: string.isRequired,
 };

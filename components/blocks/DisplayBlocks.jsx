@@ -55,7 +55,7 @@ export const PrimaryText = ({ primaryText }) => (
 );
 
 export const StyledOption = ({ value, label }) => (
-  <option value={value}>{label}</option>
+  <option key={value} value={value}>{label}</option>
 );
 
 export const SubmitButton = ({ buttonLabel }) => (

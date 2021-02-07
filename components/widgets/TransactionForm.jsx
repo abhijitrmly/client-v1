@@ -1,5 +1,6 @@
 import React from 'react';
 import 'twin.macro';
+import { Field } from 'formik';
 
 import {
   QuestionCheckboxField,
@@ -100,7 +101,9 @@ export const PredefinedCriterion = ({
   </>
 );
 
-export const CustomCriterionRadioWrapper = ({ radioName, radioLabelText, radioLabelId, radioValue }) => (
+export const CustomCriterionRadioWrapper = ({
+  radioName, radioLabelText, radioLabelId, radioValue,
+}) => (
   <div tw="flex items-center">
     <StyledRadioField
       name={radioName}
@@ -155,7 +158,9 @@ export const CustomCriterion = ({
         </div>
         {customCriterionRadioOptionArray.length && (
         <div tw="flex items-end space-x-12">
-          {customCriterionRadioOptionArray.map(({ radioName, radioLabelText, radioLabelId, radioValue }) => (
+          {customCriterionRadioOptionArray.map(({
+            radioName, radioLabelText, radioLabelId, radioValue,
+          }) => (
             <CustomCriterionRadioWrapper
               radioName={radioName}
               radioLabelText={radioLabelText}
@@ -243,15 +248,12 @@ export const CertificationCheckboxField = ({
       <StyledSelectField
         name={productName}
       >
-        {productsArray.map(({ productName, productLabel }) => (
+        {productsArray.map(({ productName: productValueName, productLabel }) => (
           <StyledOption
-            value={productName}
+            value={productValueName}
             label={productLabel}
           />
         ))}
-        <StyledOption
-          value=""
-        />
       </StyledSelectField>
     </div>
     <div>
@@ -291,5 +293,53 @@ export const NewCustomCriterionCardFooter = ({ onClick }) => (
     >
       Add custom criterion
     </button>
+  </div>
+);
+
+export const AddCertificationCardFooter = () => (
+  <div tw="px-4 py-3 bg-gray-50 text-right sm:px-6">
+    <button
+      type="submit"
+      tw="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+    >
+      Add new certification
+    </button>
+  </div>
+);
+
+export const NewCertificationAdder = ({
+  certificationName,
+  certificationsArray = [],
+  newRecordId,
+}) => (
+  <div tw="space-y-6">
+    <div tw="flex-col space-y-1">
+      <PrimaryLabel
+        primaryQuestion="Please select certification to add"
+        id={certificationName}
+      />
+      <div>
+        <Field as="select" name="baseStandard">
+          {certificationsArray.map(
+            ({ certificationId, certificationLabel }) => (
+              <option value={certificationId}>{certificationLabel}</option>
+            ),
+          )}
+        </Field>
+      </div>
+      {/* <StyledSelectField
+        name={certificationName}
+        certificationsArray={certificationsArray}
+      /> */}
+    </div>
+    <div tw="space-y-1">
+      <PrimaryLabel
+        primaryQuestion="Please enter certification identification number"
+        id={newRecordId}
+      />
+      <StyledInputField
+        name={newRecordId}
+      />
+    </div>
   </div>
 );

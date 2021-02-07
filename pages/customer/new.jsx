@@ -14,10 +14,6 @@ import {
   NewCustomCriterionCardFooter,
 } from '../../components/widgets/TransactionForm';
 
-import {
-  QuestionCheckboxField,
-} from '../../components/blocks/StyledFormium';
-
 import categories from '../../helpers/constants/categories';
 import certifications from '../../helpers/constants/certifications';
 import criteria from '../../helpers/constants/criteria';
@@ -157,7 +153,6 @@ const NewCustomerTransaction = () => {
             console.log('result', result);
             setSubmitting(false);
           }}
-
         >
           {({ isSubmitting, values = {} }) => (
             <Form>
