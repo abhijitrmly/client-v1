@@ -6,6 +6,8 @@ import {
   StyledInputField,
   StyledRadioField,
   StyledSelectField,
+  QuestionCheckboxWithOnChangeField,
+  StyledInputTextAreaField,
 } from '../blocks/StyledFormium';
 
 import {
@@ -98,10 +100,11 @@ export const PredefinedCriterion = ({
   </>
 );
 
-export const CustomCriterionRadioWrapper = ({ radioName, radioLabelText, radioLabelId }) => (
+export const CustomCriterionRadioWrapper = ({ radioName, radioLabelText, radioLabelId, radioValue }) => (
   <div tw="flex items-center">
     <StyledRadioField
       name={radioName}
+      value={radioValue}
     />
     <RadioLabel
       labelText={radioLabelText}
@@ -117,6 +120,7 @@ export const CustomCriterion = ({
   customCriterionRadioOptionArray,
   customCriterionAnswerTypeName,
   customCriterionBooleanAnswer,
+  customCriterionQuantifiableAnswer,
   customCriterionQuantMinValueName,
   customCriterionQuantMaxValueName,
   customCriterionQuantLabelName,
@@ -137,12 +141,12 @@ export const CustomCriterion = ({
       </div>
       <div tw="space-y-2 mt-4">
         <div tw="flex items-start">
-          <div tw="flex items-center h-5">
+          {/* <div tw="flex items-center h-5">
             <QuestionCheckboxField
               name={customCriterionAnswerTypeName}
             />
-          </div>
-          <div tw="ml-3 text-base">
+          </div> */}
+          <div tw="text-base">
             <SecondaryLabel
               secondaryQuestion="Is the expected answer Yes/No type or a quantifiable value?"
               id={customCriterionAnswerTypeName}
@@ -151,17 +155,18 @@ export const CustomCriterion = ({
         </div>
         {customCriterionRadioOptionArray.length && (
         <div tw="flex items-end space-x-12">
-          {customCriterionRadioOptionArray.map(({ radioName, radioLabelText, radioLabelId }) => (
+          {customCriterionRadioOptionArray.map(({ radioName, radioLabelText, radioLabelId, radioValue }) => (
             <CustomCriterionRadioWrapper
               radioName={radioName}
               radioLabelText={radioLabelText}
               radioLabelId={radioLabelId}
+              radioValue={radioValue}
             />
           ))}
         </div>
         )}
         {
-          customCriterionBooleanAnswer ? (
+          customCriterionBooleanAnswer && (
             <div tw="flex items-start">
               <div tw="flex items-center h-5">
                 <QuestionCheckboxField
@@ -170,43 +175,44 @@ export const CustomCriterion = ({
               </div>
               <div tw="ml-3 text-base">
                 <SecondaryLabel
-                  secondaryQuestion="Is the expected answer Yes/No type or a quantifiable value?"
+                  secondaryQuestion="Is the accepted answer Yes?"
                   id={customCriterionAnswerTypeName}
                 />
               </div>
             </div>
-          ) : (
-            <div tw="grid grid-cols-3 gap-4">
-              <div>
-                <SecondaryLabel
-                  secondaryQuestion="Mimumum acceptable quantity?"
-                  id={customCriterionQuantMinValueName}
-                />
-                <StyledInputField
-                  name={customCriterionQuantMinValueName}
-                />
-              </div>
-              <div>
-                <SecondaryLabel
-                  secondaryQuestion="Maximum acceptable quantity?"
-                  id={customCriterionQuantMaxValueName}
-                />
-                <StyledInputField
-                  name={customCriterionQuantMaxValueName}
-                />
-              </div>
-              <div>
-                <SecondaryLabel
-                  secondaryQuestion="Unit of quantity"
-                  id={customCriterionQuantLabelName}
-                />
-                <StyledInputField
-                  name={customCriterionQuantLabelName}
-                />
-              </div>
-            </div>
           )
-        }
+}
+        {customCriterionQuantifiableAnswer && (
+        <div tw="grid grid-cols-3 gap-4">
+          <div>
+            <SecondaryLabel
+              secondaryQuestion="Mimumum acceptable quantity?"
+              id={customCriterionQuantMinValueName}
+            />
+            <StyledInputField
+              name={customCriterionQuantMinValueName}
+            />
+          </div>
+          <div>
+            <SecondaryLabel
+              secondaryQuestion="Maximum acceptable quantity?"
+              id={customCriterionQuantMaxValueName}
+            />
+            <StyledInputField
+              name={customCriterionQuantMaxValueName}
+            />
+          </div>
+          <div>
+            <SecondaryLabel
+              secondaryQuestion="Unit of quantity"
+              id={customCriterionQuantLabelName}
+            />
+            <StyledInputField
+              name={customCriterionQuantLabelName}
+            />
+          </div>
+        </div>
+        )}
       </div>
     </div>
   </div>
@@ -216,7 +222,8 @@ export const CertificationCheckboxField = ({
   certificationsArray,
   supplierName,
   productName,
-  productsArray
+  productsArray,
+  onChange,
 }) => (
   <div tw="space-y-6">
     <div tw="space-y-1">
@@ -256,8 +263,9 @@ export const CertificationCheckboxField = ({
       certificationsArray.map(({ certificationName, certificationLabel }) => (
         <div tw="flex mt-1 items-start">
           <div tw="flex items-center h-5">
-            <QuestionCheckboxField
+            <QuestionCheckboxWithOnChangeField
               name={certificationName}
+              onChange={onChange}
             />
           </div>
           <div tw="ml-3 -mt-0.5 text-base">
@@ -271,5 +279,17 @@ export const CertificationCheckboxField = ({
     }
       </div>
     </div>
+  </div>
+);
+
+export const NewCustomCriterionCardFooter = ({ onClick }) => (
+  <div tw="px-4 py-3 bg-gray-50 text-right sm:px-6">
+    <button
+      type="button"
+      onClick={() => onClick()}
+      tw="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+    >
+      Add custom criterion
+    </button>
   </div>
 );
