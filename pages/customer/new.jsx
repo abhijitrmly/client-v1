@@ -93,7 +93,7 @@ const CertificationSelector = () => {
             productLabel: 'Cotton',
           },
         ]}
-        supplierName="supplierName"
+        supplierName="supplierEmail"
         productName="productName"
       />
     </>
@@ -124,6 +124,8 @@ const AddCustomCriteria = ({ criteriaCategory }) => {
 const NewCustomerTransaction = () => {
   const { user } = useAuth();
 
+  const TransactionsService = useService('transaction');
+
   return (
     <div>
       <Head>
@@ -132,7 +134,30 @@ const NewCustomerTransaction = () => {
       </Head>
       <main>
         <Formik
-          initialValues={{ customCriteria: {}, supplierName: '', productName: 'Cotton' }}
+          initialValues={{ customCriteria: {}, supplierEmail: '', productName: 'Cotton' }}
+          onSubmit={async (values, { setSubmitting }) => {
+            const {
+              predefinedQuestions = {},
+              customCriteria = {},
+            } = values;
+            const filteredPredefinedQuestionValues = Object
+              .fromEntries(
+                Object.entries(predefinedQuestions)
+                  .filter(([, predefinedQuestion]) => !!predefinedQuestion.isFinalSelected),
+              );
+            const filteredcustomCriteriaValues = Object
+              .fromEntries(
+                Object.entries(customCriteria)
+                  .filter(([, customCriterion]) => !!customCriterion.isFinalSelected),
+              );
+            const result = await TransactionsService.create({
+              filteredPredefinedQuestionValues,
+              filteredcustomCriteriaValues,
+            });
+            console.log('result', result);
+            setSubmitting(false);
+          }}
+
         >
           {({ isSubmitting, values = {} }) => (
             <Form>
@@ -281,20 +306,6 @@ const NewCustomerTransaction = () => {
                                 ),
                               )
                             }
-                              {/* <CustomCriterion
-                                criterionName="test"
-                                customCriterionPlaceholder="e.g. Do you use fluorinated items here?"
-                                customCriterionInputName="test.2"
-                                customCriterionRadioOptionArray={[{
-                                  radioName: 'testradio',
-                                  radioLabelText: 'Yes/No',
-                                  radioLabelId: '1',
-                                }, {
-                                  radioName: 'testradio2',
-                                  radioLabelText: 'Quantifiable',
-                                  radioLabelId: '2',
-                                }]}
-                              /> */}
                             </div>
                             <AddCustomCriteria
                               criteriaCategory={categoryName}
@@ -302,7 +313,6 @@ const NewCustomerTransaction = () => {
                           </>
                         </RightCardWrapper>
                       </SectionCardWrapper>
-
                     );
                   },
                 )
