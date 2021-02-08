@@ -1,7 +1,15 @@
 import React from 'react';
 import 'twin.macro';
+import { useRouter } from 'next/router';
 
-export const NavBar = () => (
+export const NavBar = () => {
+  const { asPath } = useRouter();
+
+  if (asPath === "/") {
+    return <></>;
+  }
+
+  return (
   <nav tw="bg-gray-800">
     <div tw="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div tw="flex items-center justify-between h-16">
@@ -15,4 +23,4 @@ export const NavBar = () => (
       </div>
     </div>
   </nav>
-);
+)};
