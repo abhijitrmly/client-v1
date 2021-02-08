@@ -1,9 +1,10 @@
 import React from 'react';
 import Head from 'next/head';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import 'twin.macro';
 
 import SignUpForm from '../components/widgets/SignUpForm';
-import { useService, useAuth } from '../store';
+import { useAuth } from '../store';
 
 export default function Home() {
   const { login, user } = useAuth();

@@ -8,7 +8,7 @@ import {
   StyledOption,
 } from './DisplayBlocks';
 
-export const AuthStyledFormField = ({ placeholder = '', name }) => (
+export const AuthStyledFormFieldTop = ({ placeholder = '', name }) => (
   <Field
     placeholder={placeholder}
     name={name}
@@ -16,7 +16,20 @@ export const AuthStyledFormField = ({ placeholder = '', name }) => (
   />
 );
 
-AuthStyledFormField.propTypes = {
+AuthStyledFormFieldTop.propTypes = {
+  placeholder: string,
+  name: string.isRequired,
+};
+
+export const AuthStyledFormFieldBottom = ({ placeholder = '', name }) => (
+  <Field
+    placeholder={placeholder}
+    name={name}
+    tw="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+  />
+);
+
+AuthStyledFormFieldBottom.propTypes = {
   placeholder: string,
   name: string.isRequired,
 };

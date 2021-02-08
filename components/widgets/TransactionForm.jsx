@@ -1,4 +1,5 @@
 import React from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import 'twin.macro';
 import { Field, FieldArray, useFormikContext } from 'formik';
 
@@ -8,7 +9,6 @@ import {
   StyledRadioField,
   StyledSelectField,
   QuestionCheckboxWithOnChangeField,
-  StyledInputTextAreaField,
 } from '../blocks/StyledFormium';
 
 import {

@@ -1,9 +1,11 @@
+/* eslint-disable react/require-default-props */
 import React from 'react';
-import { Formik, ErrorMessage } from 'formik';
+import { Formik } from 'formik';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import 'twin.macro';
 import { func } from 'prop-types';
 
-import { AuthStyledFormField, AuthStyledForm } from '../blocks/StyledFormium';
+import { AuthStyledFormFieldBottom, AuthStyledFormFieldTop, AuthStyledForm } from '../blocks/StyledFormium';
 import { StyledFormSubmitButton } from '../blocks/Buttons';
 
 const SignUpForm = ({ onSubmit }) => (
@@ -33,13 +35,11 @@ const SignUpForm = ({ onSubmit }) => (
         <div tw="rounded-md shadow-sm -space-y-px">
           <div tw="mt-8 space-y-6">
             <label htmlFor="email-address" tw="sr-only">Email address</label>
-            <AuthStyledFormField type="email" name="email" placeholder="Email address" />
-            <ErrorMessage name="email" component="div" />
+            <AuthStyledFormFieldTop type="email" name="email" placeholder="Email address" />
           </div>
           <div>
             <label htmlFor="password" tw="sr-only">Password</label>
-            <AuthStyledFormField type="password" name="password" placeholder="Password" />
-            <ErrorMessage name="password" component="div" />
+            <AuthStyledFormFieldBottom type="password" name="password" placeholder="Password" />
           </div>
         </div>
         <StyledFormSubmitButton disabled={isSubmitting} buttonTitle="Submit" />
