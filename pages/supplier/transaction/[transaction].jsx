@@ -169,7 +169,6 @@ const SupplierTransactionForm = () => {
             {({ isSubmitting, values = {} }) => (
 
               <Form>
-                {JSON.stringify(values)}
                 <SupplierPageHeader
                   certificationButtonCallback={
                     () => setCertificationForm(!certificationFormVisibility)
@@ -239,7 +238,6 @@ const SupplierTransactionForm = () => {
                           </>
                         </RightCardWrapper>
                       </SectionCardWrapper>
-                      {JSON.stringify(categoryCompliancePoints)}
                     </div>
                   );
                 }

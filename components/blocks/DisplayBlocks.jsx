@@ -70,7 +70,7 @@ SubmitButton.propTypes = {
 
 export const SupplierPageHeader = ({ certificationButtonCallback }) => (
   <div tw="flex items-center justify-end">
-    <div tw="mt-5 flex mr-4">
+    <div tw="mt-5 flex space-x-4 mr-4">
       <button
         onClick={certificationButtonCallback}
         type="button"

@@ -416,10 +416,12 @@ export const CustomComplianceCard = ({
 
               return (
                 <div>
-                  <PrimaryLabel
-                    id={`${complianceCheckpointId}.acceptableCertificationsObject.answers.${acceptableAnswerId}`}
-                    primaryQuestion={`Enter the answer in ${label}`}
-                  />
+                  <div tw="block">
+                    <PrimaryLabel
+                      id={`${complianceCheckpointId}.acceptableCertificationsObject.answers.${acceptableAnswerId}`}
+                      primaryQuestion={`Enter the answer in ${label}`}
+                    />
+                  </div>
                   <StyledInputField
                     name={`${complianceCheckpointId}.acceptableCertificationsObject.answers.${acceptableAnswerId}.value`}
                   />
