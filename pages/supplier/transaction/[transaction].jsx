@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import 'twin.macro';
@@ -6,11 +6,17 @@ import { Formik, Form, useFormikContext } from 'formik';
 
 import { useService, useAuth } from '../../../store';
 import certifications from '../../../helpers/constants/certifications';
+import categories from '../../../helpers/constants/categories';
+
 import { SectionCardWrapper, RightCardWrapper, LeftCardWrapper } from '../../../components/containers/FormPageContainers';
 import {
   NewCertificationAdder,
   AddCertificationCardFooter,
+  CustomComplianceCard,
 } from '../../../components/widgets/TransactionForm';
+import {
+  SupplierPageHeader,
+} from '../../../components/blocks/DisplayBlocks';
 
 const intersectionArray = (array1, array2) => array1.filter((value) => array2.includes(value));
 
@@ -39,7 +45,6 @@ const SupplierTransactionForm = () => {
         const crResult = await BusinessCertificationsService
           .find({ query: { user: user.user._id } });
         const { data: certificationsDataInitial = [] } = crResult;
-
         const validUserCertifications = certificationsDataInitial.map(
           (cert) => cert.baseStandard,
         );
@@ -59,6 +64,43 @@ const SupplierTransactionForm = () => {
     });
     loadTransaction();
   }, [transactionId]);
+
+  let defaultComplianceFormValues = {};
+  const { complianceCheckPoints = [] } = transactionData;
+
+  defaultComplianceFormValues = useMemo(
+    () => complianceCheckPoints.reduce((accumulator, currentValue) => {
+      const { _id: complianceId, businessCriterionDetails = {} } = currentValue;
+      const {
+        validExternalCertifications = [],
+        primaryQuestion,
+        isSelfCertificationEvidenceAllowed = {},
+        category,
+      } = businessCriterionDetails;
+
+      const acceptableCertifications = intersectionArray(
+        certificationsData,
+        validExternalCertifications,
+      );
+
+      const acceptableCertificationsObject = acceptableCertifications
+        .reduce((accumulatorCertification, currentCertificationValue) => ({
+          ...accumulatorCertification,
+          [currentCertificationValue]: true,
+        }), {});
+
+      return ({
+        ...accumulator,
+        [complianceId]: {
+          acceptableCertificationsObject,
+          primaryQuestion,
+          category,
+          ...businessCriterionDetails,
+          isSelfCertificationEvidenceAllowed: !!isSelfCertificationEvidenceAllowed.value,
+        },
+      });
+    }, {}), [certificationsData, transactionData],
+  );
 
   return (
     <div>
@@ -99,13 +141,13 @@ const SupplierTransactionForm = () => {
                           certificationName="baseStandard"
                           newRecordId="certificationId"
                           certificationsArray={Object.entries(certificationObject).map(
-                  ([certificationId, name]) => (
-                    {
-                      certificationId,
-                      certificationLabel: name,
-                    }
-                  ),
-                )}
+                            ([certificationId, name]) => (
+                              {
+                                certificationId,
+                                certificationLabel: name,
+                              }
+                            ),
+                          )}
                         />
                       </div>
                       <AddCertificationCardFooter />
@@ -116,6 +158,99 @@ const SupplierTransactionForm = () => {
             )}
           </Formik>
           )}
+          <Formik
+            initialValues={{}}
+            onSubmit={async (values) => {
+              await TransactionsService.patch(transactionId, {
+                outgoingComplianceData: { ...values },
+              });
+            }}
+          >
+            {({ isSubmitting, values = {} }) => (
+
+              <Form>
+                {JSON.stringify(values)}
+                <SupplierPageHeader
+                  certificationButtonCallback={
+                    () => setCertificationForm(!certificationFormVisibility)
+                  }
+                />
+                {
+            Object.entries(categories).map(
+              ([categoryName, categoryDetails]) => {
+                const { displayLabel, explanatoryText } = categoryDetails;
+
+                const categoryCompliancePoints = Object.entries(defaultComplianceFormValues)
+                  .filter(([, criterionDetails]) => {
+                    const { category } = criterionDetails;
+                    return (categoryName === category);
+                  });
+
+                if (categoryCompliancePoints.length > 0) {
+                  return (
+                    <div>
+                      <SectionCardWrapper>
+                        <LeftCardWrapper>
+                          <div tw="p-8 sm:px-0">
+                            <h3 tw="text-lg font-medium leading-6 text-gray-900">{displayLabel}</h3>
+                            <p tw="mt-1 text-sm text-gray-600">
+                              {explanatoryText}
+                            </p>
+                          </div>
+                        </LeftCardWrapper>
+                        <RightCardWrapper>
+                          <>
+                            <div tw="p-8">
+                              {categoryCompliancePoints.map(
+                                ([complianceCheckpointId, complianceCheckpointDetails], index) => (
+                                  <CustomComplianceCard
+                                    primaryQuestion={`${index + 1}. ${complianceCheckpointDetails.primaryQuestion}`}
+                                    isCompliantWithCertification={
+                                      Object
+                                        .keys(complianceCheckpointDetails
+                                          .acceptableCertificationsObject)
+                                        .length > 0
+                                    }
+                                    acceptableCertificationsArray={
+                                      Object
+                                        .keys(
+                                          complianceCheckpointDetails.acceptableCertificationsObject
+                                        )
+                                        .map(
+                                          (certificationId) => ({
+                                            certificationName: `${complianceCheckpointId}.acceptableCertificationsObject.${certificationId}`,
+                                            certificationLabel:
+                                              certificationObject[certificationId],
+                                          }),
+                                        )
+                                    }
+                                    complianceCheckpointId={complianceCheckpointId}
+                                    isSelfCertificationEvidenceAllowed={
+                                      complianceCheckpointDetails.isSelfCertificationEvidenceAllowed
+                                    }
+                                    acceptableAnswers={
+                                      complianceCheckpointDetails.acceptableAnswers
+                                    }
+                                    values={values}
+                                  />
+                                ),
+                              )}
+                            </div>
+                          </>
+                        </RightCardWrapper>
+                      </SectionCardWrapper>
+                      {JSON.stringify(categoryCompliancePoints)}
+                    </div>
+                  );
+                }
+
+                return <></>;
+              },
+            )
+          }
+              </Form>
+            )}
+          </Formik>
         </div>
       </main>
     </div>

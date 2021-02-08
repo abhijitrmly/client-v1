@@ -1,6 +1,6 @@
 import React from 'react';
 import 'twin.macro';
-import { Field } from 'formik';
+import { Field, FieldArray, useFormikContext } from 'formik';
 
 import {
   QuestionCheckboxField,
@@ -327,10 +327,6 @@ export const NewCertificationAdder = ({
           )}
         </Field>
       </div>
-      {/* <StyledSelectField
-        name={certificationName}
-        certificationsArray={certificationsArray}
-      /> */}
     </div>
     <div tw="space-y-1">
       <PrimaryLabel
@@ -342,4 +338,176 @@ export const NewCertificationAdder = ({
       />
     </div>
   </div>
+);
+
+export const CustomComplianceCard = ({
+  primaryQuestion,
+  isCompliantWithCertification,
+  acceptableCertificationsArray = [],
+  isSelfCertificationEvidenceAllowed = true,
+  acceptableAnswers = [],
+  complianceCheckpointId,
+  values = {},
+}) => (
+  <>
+    <div tw="ml-4 space-y-2">
+      <div tw="text-base">
+        <PrimaryLabel
+          primaryQuestion={primaryQuestion}
+        />
+      </div>
+      {
+        isCompliantWithCertification && (
+        <div tw="ml-4 space-y-2">
+          <div tw="flex items-center">
+            <span tw="h-6 flex items-center sm:h-7">
+              <svg tw="flex-shrink-0 h-4 w-4 text-blue-500" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+              </svg>
+            </span>
+            <p tw="ml-2 text-xs">Your certification covers this compliance criterion. Please tick the certification below to use it as evidence.</p>
+          </div>
+          <div tw="mt-2">
+            {
+      acceptableCertificationsArray.map(({ certificationName, certificationLabel }) => (
+        <div tw="flex mt-1 items-start">
+          <div tw="flex items-center h-5">
+            <QuestionCheckboxField
+              name={certificationName}
+            />
+          </div>
+          <div tw="ml-3 -mt-0.5 text-base">
+            <PrimaryLabel
+              primaryQuestion={certificationLabel}
+              id={certificationName}
+            />
+          </div>
+        </div>
+      ))
+    }
+
+          </div>
+
+        </div>
+        )
+      }
+      {
+      isSelfCertificationEvidenceAllowed && (
+        <>
+          {acceptableAnswers.map(
+            (acceptableAnswer) => {
+              const {
+                valueBoolean, label, _id: acceptableAnswerId,
+              } = acceptableAnswer;
+
+              if (!(typeof valueBoolean === 'undefined' || valueBoolean === null)) {
+                return (
+                  <div tw="space-x-2">
+                    <QuestionCheckboxField
+                      name={`${complianceCheckpointId}.acceptableCertificationsObject.answers.${acceptableAnswerId}.valueBoolean`}
+                    />
+                    <SecondaryLabel
+                      id={`${complianceCheckpointId}.acceptableCertificationsObject.answers.${acceptableAnswerId}`}
+                      secondaryQuestion="Is your answer 'Yes'?"
+                    />
+                  </div>
+                );
+              }
+
+              return (
+                <div>
+                  <PrimaryLabel
+                    id={`${complianceCheckpointId}.acceptableCertificationsObject.answers.${acceptableAnswerId}`}
+                    primaryQuestion={`Enter the answer in ${label}`}
+                  />
+                  <StyledInputField
+                    name={`${complianceCheckpointId}.acceptableCertificationsObject.answers.${acceptableAnswerId}.value`}
+                  />
+                </div>
+              );
+            },
+          )}
+        </>
+      )
+    }
+      <SecondaryLabel
+        secondaryQuestion="Please upload evidence/s for the answer above"
+      />
+      <CriterionEvidenceWidget
+        complianceCheckpointId={complianceCheckpointId}
+        values={values}
+      />
+    </div>
+  </>
+);
+
+const SelfEvidenceField = (props) => {
+  const {
+    setFieldValue,
+  } = useFormikContext();
+
+  const {
+    index,
+    complianceCheckpointId,
+  } = props;
+
+  const handleCriteriaChange = (event = {}) => {
+    const { target = {} } = event;
+    const { value } = target;
+    setFieldValue(`${complianceCheckpointId}.selfEvidences[${index}].url`, value);
+    setFieldValue(`${complianceCheckpointId}.selfEvidences[${index}].type`, 'other');
+  };
+
+  return (
+    <StyledInputField
+      name={`${complianceCheckpointId}.selfEvidences[${index}].url`}
+                    // checked={isSelected}
+      onChange={handleCriteriaChange}
+    />
+  );
+};
+
+const CriterionEvidenceWidget = ({
+  complianceCheckpointId,
+  values,
+}) => (
+  <FieldArray
+    name={`[${complianceCheckpointId}].selfEvidences`}
+    render={(arrayHelpers) => (
+      <div tw="space-y-1">
+        {values[complianceCheckpointId]
+          && values[complianceCheckpointId].selfEvidences
+          && values[complianceCheckpointId].selfEvidences.length > 0
+          && (values[complianceCheckpointId].selfEvidences)
+            .map((evidence, index) => (
+              <div key={evidence.tempId} tw="space-x-2 mb-2">
+                {/** both these conventions do the same */}
+                {/* <Field name={`friends[${index}].name`} />
+                      <Field name={`friends.${index}.age`} /> */}
+                <SelfEvidenceField
+                  complianceCheckpointId={complianceCheckpointId}
+                  index={index}
+                />
+                <button
+                  tw="bg-red-500 hover:bg-red-700 text-white text-sm py-2 px-4 rounded-full"
+                  type="button"
+                  onClick={() => arrayHelpers.remove(index)}
+                >
+                  Remove
+                </button>
+              </div>
+            ))}
+        <button
+          tw="bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white text-sm py-2 px-4 mt-2 rounded inline-flex items-center"
+          type="button"
+          onClick={() => arrayHelpers.push({ tempId: Date.now() })}
+        >
+          <svg width="20" height="20" fill="currentColor" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1344 1472q0-26-19-45t-45-19-45 19-19 45 19 45 45 19 45-19 19-45zm256 0q0-26-19-45t-45-19-45 19-19 45 19 45 45 19 45-19 19-45zm128-224v320q0 40-28 68t-68 28h-1472q-40 0-68-28t-28-68v-320q0-40 28-68t68-28h427q21 56 70.5 92t110.5 36h256q61 0 110.5-36t70.5-92h427q40 0 68 28t28 68zm-325-648q-17 40-59 40h-256v448q0 26-19 45t-45 19h-256q-26 0-45-19t-19-45v-448h-256q-42 0-59-40-17-39 14-69l448-448q18-19 45-19t45 19l448 448q31 30 14 69z" />
+          </svg>
+          <span>Add evidence</span>
+        </button>
+      </div>
+    )}
+  />
 );

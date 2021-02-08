@@ -197,7 +197,6 @@ const NewCustomerTransaction = () => {
                 Object.entries(categories).map(
                   ([categoryName, categoryDetails]) => {
                     const { displayLabel, explanatoryText } = categoryDetails;
-
                     let predefinedCategoryCriteria = [];
                     let customCategoryCriteria = [];
                     if (values) {
