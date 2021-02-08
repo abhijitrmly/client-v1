@@ -1,10 +1,11 @@
 /* eslint-disable no-underscore-dangle */
 import React from 'react';
 import Head from 'next/head';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import 'twin.macro';
 import { Formik, Form, useFormikContext } from 'formik';
 
-import { useService, useAuth } from '../../store';
+import { useService } from '../../store';
 
 import { SectionCardWrapper, RightCardWrapper, LeftCardWrapper } from '../../components/containers/FormPageContainers';
 import {
@@ -118,8 +119,6 @@ const AddCustomCriteria = ({ criteriaCategory }) => {
 };
 
 const NewCustomerTransaction = () => {
-  const { user } = useAuth();
-
   const TransactionsService = useService('transaction');
 
   return (
@@ -146,11 +145,10 @@ const NewCustomerTransaction = () => {
                 Object.entries(customCriteria)
                   .filter(([, customCriterion]) => !!customCriterion.isFinalSelected),
               );
-            const result = await TransactionsService.create({
+            await TransactionsService.create({
               filteredPredefinedQuestionValues,
               filteredcustomCriteriaValues,
             });
-            console.log('result', result);
             setSubmitting(false);
           }}
         >

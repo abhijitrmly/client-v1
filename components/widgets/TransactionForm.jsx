@@ -513,3 +513,103 @@ const CriterionEvidenceWidget = ({
     )}
   />
 );
+
+export const CustomerCheckpointValidationCard = ({
+  primaryQuestion,
+  isMarkedCompliantByCustomer,
+  providedExternalCertifications = [],
+  providedAnswers = [],
+  providedEvidences = [],
+  complianceCheckpointId,
+  validationCheckpointName,
+}) => (
+  <>
+    <div tw="ml-4 space-y-2">
+      <div tw="text-base">
+        <PrimaryLabel
+          primaryQuestion={primaryQuestion}
+        />
+      </div>
+      {
+        isMarkedCompliantByCustomer && (
+        <div tw="ml-4 space-y-2">
+          <div tw="flex items-center">
+            <span tw="h-6 flex items-center sm:h-7">
+              <svg tw="flex-shrink-0 h-4 w-4 text-blue-500" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+              </svg>
+            </span>
+            <p tw="ml-2 text-xs">You have already marked this checkpoint as compliant.</p>
+          </div>
+        </div>
+        )
+      }
+      {providedExternalCertifications.length > 0
+        && (
+        <PrimarySubtext
+          primaryQuestionSubtext="External certifications provided by supplier-"
+        />
+        )}
+      {
+      providedExternalCertifications.map(({ certificationLabel }) => (
+        <div tw="flex mt-1 items-start">
+          <div tw="ml-3 -mt-0.5 text-base">
+            <PrimaryText
+              primaryText={certificationLabel}
+            />
+          </div>
+        </div>
+      ))
+    }
+      {providedEvidences.length > 0
+        && (
+        <PrimarySubtext
+          primaryQuestionSubtext="Evidences for self-auditing claim provided by supplier-"
+        />
+        )}
+      {
+      providedEvidences.map(({ evidenceUrl }) => (
+        <div tw="flex mt-1 items-start">
+          <div tw="ml-3 -mt-0.5 text-base">
+            <PrimaryText
+              primaryText={evidenceUrl}
+            />
+          </div>
+        </div>
+      ))
+    }
+      {providedAnswers.length > 0
+        && (
+        <PrimarySubtext
+          primaryQuestionSubtext="Answers for self-auditing claims provided by supplier-"
+        />
+        )}
+      {
+      providedAnswers.map(({ providedAnswer }) => (
+        <div tw="flex mt-1 items-start">
+          <div tw="ml-3 -mt-0.5 text-base">
+            <PrimaryText
+              primaryText={providedAnswer}
+            />
+          </div>
+        </div>
+      ))
+    }
+      {!isMarkedCompliantByCustomer && (
+      <div tw="flex mt-1 items-start">
+        <div tw="flex items-center h-5">
+          <QuestionCheckboxField
+            name={validationCheckpointName}
+          />
+        </div>
+        <div tw="ml-3 -mt-0.5 text-base">
+          <PrimaryLabel
+            primaryQuestion="Mark this checkbox to accept compliance for this criterion by supplier"
+            id={validationCheckpointName}
+          />
+        </div>
+      </div>
+      )}
+    </div>
+  </>
+);
