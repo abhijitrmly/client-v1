@@ -134,6 +134,7 @@ const NewCustomerTransaction = () => {
             const {
               predefinedQuestions = {},
               customCriteria = {},
+              supplierEmail,
             } = values;
             const filteredPredefinedQuestionValues = Object
               .fromEntries(
@@ -148,6 +149,7 @@ const NewCustomerTransaction = () => {
             await TransactionsService.create({
               filteredPredefinedQuestionValues,
               filteredcustomCriteriaValues,
+              supplierEmail,
             });
             setSubmitting(false);
           }}

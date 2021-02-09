@@ -5,6 +5,7 @@ import 'twin.macro';
 
 import SignUpForm from '../components/widgets/SignUpForm';
 import { useAuth } from '../store';
+import { TransactionsTable } from '../components/widgets/Tables';
 
 export default function Home() {
   const { login, user } = useAuth();
@@ -22,7 +23,7 @@ export default function Home() {
       </Head>
       <main>
         <div tw="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-          {user ? (<div>Logged in</div>) : (
+          {user ? (<div><TransactionsTable /></div>) : (
             <div tw="max-w-md w-full space-y-8">
               <div>
                 <h2 tw="mt-6 text-center text-3xl font-extrabold text-gray-900">
