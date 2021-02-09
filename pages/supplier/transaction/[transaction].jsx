@@ -17,6 +17,7 @@ import {
 import {
   SupplierPageHeader,
 } from '../../../components/blocks/DisplayBlocks';
+import { SuccessPatchSupplierCard } from '../../../components/blocks/MessageCards';
 
 const intersectionArray = (array1, array2) => array1.filter((value) => array2.includes(value));
 
@@ -35,6 +36,7 @@ const SupplierTransactionForm = () => {
   const [transactionData, setTransactionData] = useState({});
   const [certificationsData, setCertificationsData] = useState([]);
   const [certificationFormVisibility, setCertificationForm] = useState(false);
+  const [showTransactionPatchCard, setTransactionPatchVisibility] = useState(false);
 
   const TransactionsService = useService('transaction');
   const BusinessCertificationsService = useService('business-certifications');
@@ -102,6 +104,12 @@ const SupplierTransactionForm = () => {
     }, {}), [certificationsData, transactionData],
   );
 
+  if (showTransactionPatchCard) {
+    return (
+      <SuccessPatchSupplierCard />
+    );
+  }
+
   return (
     <div>
       <Head>
@@ -164,6 +172,7 @@ const SupplierTransactionForm = () => {
               await TransactionsService.patch(transactionId, {
                 outgoingComplianceData: { ...values },
               });
+              setTransactionPatchVisibility(true);
             }}
           >
             {({ isSubmitting, values = {} }) => (
@@ -213,7 +222,7 @@ const SupplierTransactionForm = () => {
                                     acceptableCertificationsArray={
                                       Object
                                         .keys(
-                                          complianceCheckpointDetails.acceptableCertificationsObject
+                                          complianceCheckpointDetails.acceptableCertificationsObject,
                                         )
                                         .map(
                                           (certificationId) => ({

@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import React from 'react';
+import React, { useState } from 'react';
 import Head from 'next/head';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import 'twin.macro';
@@ -14,6 +14,8 @@ import {
   CertificationCheckboxField,
   NewCustomCriterionCardFooter,
 } from '../../components/widgets/TransactionForm';
+
+import { SuccessCustomerCard } from '../../components/blocks/MessageCards';
 
 import categories from '../../helpers/constants/categories';
 import certifications from '../../helpers/constants/certifications';
@@ -97,7 +99,6 @@ const CertificationSelector = () => {
   );
 };
 
-// @TODO add button to remove custom criterion
 const AddCustomCriteria = ({ criteriaCategory }) => {
   const {
     setFieldValue, values = {},
@@ -119,7 +120,16 @@ const AddCustomCriteria = ({ criteriaCategory }) => {
 };
 
 const NewCustomerTransaction = () => {
+  const [transactionCreationId, setTransactionCreationId] = useState('');
   const TransactionsService = useService('transaction');
+
+  if (transactionCreationId) {
+    return (
+      <SuccessCustomerCard
+        transactionLink={`/customer/transaction/${transactionCreationId}`}
+      />
+    );
+  }
 
   return (
     <div>
@@ -146,11 +156,14 @@ const NewCustomerTransaction = () => {
                 Object.entries(customCriteria)
                   .filter(([, customCriterion]) => !!customCriterion.isFinalSelected),
               );
-            await TransactionsService.create({
+            const transactionCreationResult = await TransactionsService.create({
               filteredPredefinedQuestionValues,
               filteredcustomCriteriaValues,
               supplierEmail,
             });
+
+            const { _id: transactionCreationResultId } = transactionCreationResult;
+            setTransactionCreationId(transactionCreationResultId);
             setSubmitting(false);
           }}
         >
