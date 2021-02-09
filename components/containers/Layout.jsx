@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 export const NavBar = () => {
   const { asPath } = useRouter();
 
-  if (asPath === '/') {
+  if (asPath === '/' || asPath.split('/').includes('know-your-certification')) {
     return <></>;
   }
 
