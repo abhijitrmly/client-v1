@@ -1,6 +1,7 @@
 import React from 'react';
 import 'twin.macro';
 import Head from 'next/head';
+import Link from 'next/link';
 
 const GotsLandingPage = () => (
   <div>
@@ -74,7 +75,7 @@ const GotsLandingPage = () => (
                 <div tw="pt-6 text-base leading-6 font-bold sm:text-lg sm:leading-7">
                   <p>Want to dig deeper into GOTS?</p>
                   <p>
-                    <a href="https://www.global-standard.org/" tw="text-blue-600 hover:text-blue-700"> Read the docs &rarr; </a>
+                    <a href="https://www.global-standard.org/" tw="text-blue-600 hover:text-blue-700" target="blank"> Read the docs &rarr; </a>
                   </p>
                 </div>
               </div>
@@ -90,9 +91,11 @@ const GotsLandingPage = () => (
           </h2>
           <div tw="mt-8 flex lg:mt-0 lg:flex-shrink-0">
             <div tw="inline-flex rounded-md shadow">
-              <a href="#" tw="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
-                Get started
-              </a>
+              <Link href="/customer/new" passHref>
+                <a target="_blank" tw="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
+                  Get started
+                </a>
+              </Link>
             </div>
           </div>
         </div>
