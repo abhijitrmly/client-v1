@@ -67,13 +67,11 @@ QuestionCheckboxField.propTypes = {
   name: string.isRequired,
 };
 
+// @TODO this should have been generic names
 export const StyledSelectField = ({ name, certificationsArray = [] }) => (
   <Field name={name} as="select" tw="mt-1 block w-3/4 py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
     {certificationsArray.map(({ certificationId, certificationLabel }) => (
-      <StyledOption
-        value={certificationId}
-        label={certificationLabel}
-      />
+      <option key={certificationId} value={certificationId}>{certificationLabel}</option>
     ))}
   </Field>
 );

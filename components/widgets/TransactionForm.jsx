@@ -251,14 +251,12 @@ export const CertificationCheckboxField = ({
       />
       <StyledSelectField
         name={productName}
-      >
-        {productsArray.map(({ productName: productValueName, productLabel }) => (
-          <StyledOption
-            value={productValueName}
-            label={productLabel}
-          />
-        ))}
-      </StyledSelectField>
+        certificationsArray={productsArray
+          .map(({ value, label }) => ({
+            certificationId: value,
+            certificationLabel: label,
+          }))}
+      />
     </div>
     <div>
       <PrimaryText

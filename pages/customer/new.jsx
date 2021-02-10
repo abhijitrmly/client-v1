@@ -88,8 +88,8 @@ const CertificationSelector = () => {
         onChange={handleCriteriaChange}
         productsArray={[
           {
-            productName: 'Cotton',
-            productLabel: 'Cotton',
+            value: 'Cotton',
+            label: 'Cotton',
           },
         ]}
         supplierName="supplierEmail"
