@@ -4,6 +4,7 @@ import Head from 'next/head';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import 'twin.macro';
 import { Formik, Form, useFormikContext } from 'formik';
+import * as Yup from 'yup';
 
 import { useService } from '../../store';
 
@@ -15,6 +16,7 @@ import {
   NewCustomCriterionCardFooter,
 } from '../../components/widgets/TransactionForm';
 
+import { PrimaryText } from '../../components/blocks/DisplayBlocks';
 import { SuccessCustomerCard } from '../../components/blocks/MessageCards';
 
 import categories from '../../helpers/constants/categories';
@@ -119,6 +121,12 @@ const AddCustomCriteria = ({ criteriaCategory }) => {
   );
 };
 
+const SupplierDetailsSchema = Yup.object().shape({
+  supplierEmail: Yup.string()
+    .email('Invalid email')
+    .required('Required'),
+});
+
 const NewCustomerTransaction = () => {
   const [transactionCreationId, setTransactionCreationId] = useState('');
   const TransactionsService = useService('transaction');
@@ -140,6 +148,7 @@ const NewCustomerTransaction = () => {
       <main>
         <Formik
           initialValues={{ customCriteria: {}, supplierEmail: '', productName: 'Cotton' }}
+          validationSchema={SupplierDetailsSchema}
           onSubmit={async (values, { setSubmitting }) => {
             const {
               predefinedQuestions = {},
@@ -243,13 +252,20 @@ const NewCustomerTransaction = () => {
                           <>
                             <div tw="p-8">
                               {
+                                predefinedCategoryCriteria.length === 0 && customCategoryCriteria.length === 0 && (
+                                  <PrimaryText
+                                    primaryText="You have not selected any criterion for this catgeory.
+                                    You can add criteria by selecting one of the pre-defined certifications above, or by adding your own custom criterion by clicking button below."
+                                  />
+                                )
+                              }
+                              {
                                 predefinedCategoryCriteria.length > 0 && (
                                 <div>
                                   <legend tw="text-base font-medium text-gray-900">Criteria added from selected certifications</legend>
                                 </div>
                                 )
                               }
-
                               {
                               predefinedCategoryCriteria.map(
                                 (([criterionId, criterionDetails]) => (

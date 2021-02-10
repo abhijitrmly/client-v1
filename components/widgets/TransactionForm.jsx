@@ -9,6 +9,7 @@ import {
   StyledRadioField,
   StyledSelectField,
   QuestionCheckboxWithOnChangeField,
+  StyledErrorMessage,
 } from '../blocks/StyledFormium';
 
 import {
@@ -239,9 +240,16 @@ export const CertificationCheckboxField = ({
         />
       </div>
       <div>
-        <StyledInputField
-          name={supplierName}
-        />
+        <div>
+          <StyledInputField
+            name={supplierName}
+          />
+        </div>
+        <div>
+          <StyledErrorMessage
+            name={supplierName}
+          />
+        </div>
       </div>
     </div>
     <div tw="space-y-1">

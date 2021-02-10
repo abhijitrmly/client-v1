@@ -1,7 +1,7 @@
 /* eslint-disable react/require-default-props */
 import React from 'react';
 import { element, string, boolean } from 'prop-types';
-import { Field, Form } from 'formik';
+import { Field, Form, ErrorMessage } from 'formik';
 import 'twin.macro';
 
 import {
@@ -87,6 +87,16 @@ export const StyledInputField = ({ name, placeholder = '' }) => (
     // as={isTextArea ? 'textarea' : 'input'}
     tw="flex-1 appearance-none border border-gray-300 w-3/4 py-2 px-4 bg-white text-gray-700 placeholder-gray-400 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
   />
+);
+
+const ErrorLabel = ({ children }) => (
+  <p tw="font-normal text-xs text-red-700">
+    {children}
+  </p>
+);
+
+export const StyledErrorMessage = ({ name }) => (
+  <ErrorMessage component={ErrorLabel} name={name} />
 );
 
 export const StyledInputTextAreaField = ({ name, placeholder = '' }) => (
