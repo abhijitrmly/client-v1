@@ -185,8 +185,6 @@ const NewCustomerTransaction = () => {
                     </span>
                   </div>
                 </header>
-
-                {JSON.stringify(values)}
                 <SectionCardWrapper>
                   <LeftCardWrapper>
                     <div tw="p-8 sm:px-0">
