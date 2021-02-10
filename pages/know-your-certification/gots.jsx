@@ -53,7 +53,7 @@ const GotsLandingPage = () => (
                       </span>
                       <p tw="ml-2">
                         Your products are marketed in countries where
-                        strict regulations exist on product consituents
+                        strict regulations exist on product constituents
                       </p>
                     </li>
                     <li tw="flex items-start">
@@ -62,7 +62,7 @@ const GotsLandingPage = () => (
                           <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                         </svg>
                       </span>
-                      <p tw="ml-2">Your products could be used for medical applications or by children/senior citizens</p>
+                      <p tw="ml-2">Your products could be used for medical applications or by infants</p>
                     </li>
                   </ul>
                   <br />
@@ -124,7 +124,7 @@ const GotsLandingPage = () => (
         <div tw="max-w-5xl mx-auto space-x-6 py-12 px-4 sm:px-6 lg:py-16 lg:px-8 lg:flex lg:items-center lg:justify-between">
           <h2 tw="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
             <span tw="block">Ready to dive in?</span>
-            <span tw="block text-blue-900">{'Create your organization\'s sustainability standard'}</span>
+            <span tw="block text-blue-900">{'Create your organization\'s sustainability protocol'}</span>
           </h2>
           <div tw="mt-8 flex lg:mt-0 lg:flex-shrink-0">
             <div tw="inline-flex rounded-md shadow">
