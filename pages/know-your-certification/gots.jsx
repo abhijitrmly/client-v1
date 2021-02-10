@@ -65,6 +65,43 @@ const GotsLandingPage = () => (
                       <p tw="ml-2">Your products could be used for medical applications or by children/senior citizens</p>
                     </li>
                   </ul>
+                  <br />
+                  <p>
+                    Not ideal for applications where:
+                  </p>
+                  <ul tw="list-disc space-y-2">
+                    <li tw="flex items-start">
+                      <span tw="h-5 flex items-center sm:h-7">
+                        <svg tw="h-5 w-5 text-red-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                        </svg>
+                      </span>
+                      <p tw="ml-2">
+                        Cottom farming process is strictly needed to be eco-friendly and ethical
+                      </p>
+                    </li>
+                    <li tw="flex items-start">
+                      <span tw="h-5 flex items-center sm:h-7">
+                        <svg tw="h-5 w-5 text-red-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                        </svg>
+                      </span>
+                      <p tw="ml-2">
+                        Customers are accepting of responsible use of chemical in farming
+                      </p>
+                    </li>
+                    <li tw="flex items-start">
+                      <span tw="h-5 flex items-center sm:h-7">
+                        <svg tw="h-5 w-5 text-red-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                        </svg>
+                      </span>
+                      <p tw="ml-2">
+                        Cost is a factor for the product as the market is saturated
+                      </p>
+                    </li>
+                  </ul>
+                  <br />
                   <p>
                     GOTS represents the minimum
                     requirements for products to be considered honestly
@@ -87,12 +124,12 @@ const GotsLandingPage = () => (
         <div tw="max-w-5xl mx-auto space-x-6 py-12 px-4 sm:px-6 lg:py-16 lg:px-8 lg:flex lg:items-center lg:justify-between">
           <h2 tw="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
             <span tw="block">Ready to dive in?</span>
-            <span tw="block text-indigo-600">{'Create your organization\'s standard'}</span>
+            <span tw="block text-blue-900">{'Create your organization\'s sustainability standard'}</span>
           </h2>
           <div tw="mt-8 flex lg:mt-0 lg:flex-shrink-0">
             <div tw="inline-flex rounded-md shadow">
               <Link href="/customer/new" passHref>
-                <a target="_blank" tw="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
+                <a target="_blank" tw="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-900 hover:bg-blue-700">
                   Get started
                 </a>
               </Link>
