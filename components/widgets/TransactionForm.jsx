@@ -232,13 +232,17 @@ export const CertificationCheckboxField = ({
 }) => (
   <div tw="space-y-6">
     <div tw="space-y-1">
-      <PrimaryLabel
-        primaryQuestion="Please enter email of customer"
-        id={supplierName}
-      />
-      <StyledInputField
-        name={supplierName}
-      />
+      <div>
+        <PrimaryLabel
+          primaryQuestion="Please enter email of customer"
+          id={supplierName}
+        />
+      </div>
+      <div>
+        <StyledInputField
+          name={supplierName}
+        />
+      </div>
     </div>
     <div tw="space-y-1">
       <PrimaryLabel
