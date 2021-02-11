@@ -126,6 +126,9 @@ const CustomerTransactionEditForm = () => {
                                         }))
                                       }
                                     validationCheckpointName={`complianceCheckPoints.${complianceCheckpointId}.isCompliant`}
+                                    supplierComplianceDataExists={
+                                      complianceData && Object.keys(complianceData).length > 0
+                                    }
                                   />
                                 ),
                               )}

@@ -141,9 +141,11 @@ const NewCustomerTransaction = () => {
 
   if (transactionCreationId) {
     return (
-      <SuccessCustomerCard
-        transactionLink={`/customer/transaction/${transactionCreationId}`}
-      />
+      <div tw="m-1">
+        <SuccessCustomerCard
+          transactionLink={`/customer/transaction/${transactionCreationId}`}
+        />
+      </div>
     );
   }
 
