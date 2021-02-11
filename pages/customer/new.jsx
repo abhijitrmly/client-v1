@@ -194,26 +194,27 @@ const NewCustomerTransaction = () => {
                     </span>
                   </div>
                 </header>
-                <SectionCardWrapper>
-                  <LeftCardWrapper>
-                    <div tw="p-8 sm:px-0">
-                      <h3 tw="text-lg font-medium leading-6 text-gray-900">Product, Supplier & Certifications</h3>
-                      <p tw="mt-1 text-sm text-gray-600">
-                        Add supplier details and product for which you would like to
-                        initiate compliance transaction. You can also select existing certifications
-                        whose criteria you would like to use for this transaction.
-                      </p>
-                    </div>
-                  </LeftCardWrapper>
-                  <RightCardWrapper>
-                    <div tw="p-8">
-                      <div tw="col-span-6 sm:col-span-3">
-                        <CertificationSelector />
+                <div tw="px-16">
+                  <SectionCardWrapper>
+                    <LeftCardWrapper>
+                      <div tw="p-8 sm:px-0">
+                        <h3 tw="text-lg font-medium leading-6 text-gray-900">Product, Supplier & Certifications</h3>
+                        <p tw="mt-1 text-sm text-gray-600">
+                          Add supplier details and product for which you would like to
+                          initiate compliance transaction. You can also select existing certifications
+                          whose criteria you would like to use for this transaction.
+                        </p>
                       </div>
-                    </div>
-                  </RightCardWrapper>
-                </SectionCardWrapper>
-                {
+                    </LeftCardWrapper>
+                    <RightCardWrapper>
+                      <div tw="p-8">
+                        <div tw="col-span-6 sm:col-span-3">
+                          <CertificationSelector />
+                        </div>
+                      </div>
+                    </RightCardWrapper>
+                  </SectionCardWrapper>
+                  {
                 Object.entries(categories).map(
                   ([categoryName, categoryDetails]) => {
                     const { displayLabel, explanatoryText } = categoryDetails;
@@ -338,6 +339,7 @@ const NewCustomerTransaction = () => {
                   },
                 )
               }
+                </div>
               </div>
             </Form>
           )}

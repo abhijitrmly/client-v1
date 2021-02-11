@@ -2,6 +2,7 @@ import React from 'react';
 import Head from 'next/head';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import 'twin.macro';
+import { useRouter } from 'next/router';
 
 import SignUpForm from '../components/widgets/SignUpForm';
 import { useAuth } from '../store';
@@ -9,9 +10,11 @@ import { TransactionsTable } from '../components/widgets/Tables';
 
 export default function Home() {
   const { login, user } = useAuth();
+  const router = useRouter();
 
   const onSignUpFormSubmit = async (email, password) => {
     await login({ email, password });
+    router.push('/dashboard');
   };
 
   return (

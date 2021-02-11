@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
-import { useAuth, useService } from '../../store';
-import { TransactionsTable } from '../../components/widgets/Tables';
+import { useAuth, useService } from '../store';
+import { TransactionsTable } from '../components/widgets/Tables';
 
 const SupplierTransactionIndex = () => {
   const [transactionData, setTransactionData] = useState([]);
