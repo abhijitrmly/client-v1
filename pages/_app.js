@@ -5,12 +5,14 @@ import { elementType, object } from 'prop-types';
 
 import StoreProvider from '../store';
 import GlobalStyles from '../components/GlobalStyles';
+import { NavBar } from '../components/containers/Layout';
 
 function MyApp({ Component, pageProps }) {
   // eslint-disable-next-line react/jsx-props-no-spreading
   return (
     <StoreProvider>
       <GlobalStyles />
+      <NavBar />
       <Component {...pageProps} />
     </StoreProvider>
   );

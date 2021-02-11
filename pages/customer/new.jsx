@@ -179,7 +179,7 @@ const NewCustomerTransaction = () => {
           {({ isSubmitting, values = {} }) => (
             <Form>
               <div>
-                <header tw="bg-white shadow">
+                <header tw="bg-white">
                   <div tw="flex justify-between py-6 px-4 sm:px-6 lg:px-8">
                     <h1 tw="text-3xl font-bold leading-tight text-gray-900">
                       New Compliance Transaction
