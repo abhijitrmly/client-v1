@@ -78,7 +78,6 @@ const CertificationSelector = () => {
            Object.keys(certificationObject).map(
              (certificationId) => {
                const name = certificationObject[certificationId];
-               // const isSelected = certificationState[certificationId];
                return ({
                  certificationName: certificationId,
                  certificationLabel: name,
@@ -121,10 +120,19 @@ const AddCustomCriteria = ({ criteriaCategory }) => {
   );
 };
 
+const mapRules = (map, rule) => (Object
+  .keys(map).reduce((newMap, key) => ({ ...newMap, [key]: rule }), {}));
+
 const SupplierDetailsSchema = Yup.object().shape({
-  supplierEmail: Yup.string()
+  supplierEmail: Yup.string().trim()
     .email('Invalid email')
     .required('Required'),
+  customCriteria: Yup.lazy((map) => Yup.object(
+    mapRules(map, Yup.object({
+      primaryQuestion: Yup.string().trim().required('Question is required for custom criterion'),
+      questionType: Yup.string().required('Answer type is required'),
+    })),
+  )),
 });
 
 const NewCustomerTransaction = () => {

@@ -142,6 +142,9 @@ export const CustomCriterion = ({
           placeholder={customCriterionPlaceholder}
           isTextArea
         />
+        <StyledErrorMessage
+          name={customCriterionInputName}
+        />
       </div>
       <div tw="space-y-2 mt-4">
         <div tw="flex items-start">
