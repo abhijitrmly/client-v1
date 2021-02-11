@@ -124,5 +124,10 @@ export const DashboardCTACard = ({
       </div>
     </div>
   </div>
+);
 
+export const SuccessAlert = ({ alertMessage }) => (
+  <div tw="p-2 px-6 mx-96 items-center justify-center bg-indigo-600 text-indigo-100 lg:rounded-full flex lg:inline-flex justify-center" role="alert">
+    <span tw="font-normal mr-2 text-left flex-auto">{alertMessage}</span>
+  </div>
 );

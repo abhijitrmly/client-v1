@@ -15,7 +15,7 @@ import {
   CustomComplianceCard,
 } from '../../../components/widgets/TransactionForm';
 import {
-  SupplierPageHeader,
+  SupplierPageHeader, SuccessAlert,
 } from '../../../components/blocks/DisplayBlocks';
 import { SuccessPatchSupplierCard } from '../../../components/blocks/MessageCards';
 
@@ -37,6 +37,7 @@ const SupplierTransactionForm = () => {
   const [certificationsData, setCertificationsData] = useState([]);
   const [certificationFormVisibility, setCertificationForm] = useState(false);
   const [showTransactionPatchCard, setTransactionPatchVisibility] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
 
   const TransactionsService = useService('transaction');
   const BusinessCertificationsService = useService('business-certifications');
@@ -117,19 +118,31 @@ const SupplierTransactionForm = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
+        <div tw="my-4">
+          {alertMessage && (
+          <SuccessAlert
+            alertMessage={alertMessage}
+          />
+          )}
+        </div>
         <div>
           {certificationFormVisibility && (
           <Formik
             initialValues={{}}
             onSubmit={async (values) => {
-              const businessCertificationCreateResponse = await BusinessCertificationsService
+              await BusinessCertificationsService
                 .create({
                   ...values,
                   user: user && user.user && user.user._id,
                 });
+              setCertificationForm(false);
+              setAlertMessage('Your certification has been registered. The registration number will be verified with the certifiers data.');
+              setTimeout(() => {
+                setAlertMessage('');
+              }, 4000);
             }}
           >
-            {({ isSubmitting, values = {} }) => (
+            {({ isSubmitting }) => (
               <Form>
                 <SectionCardWrapper>
                   <LeftCardWrapper>
@@ -158,7 +171,9 @@ const SupplierTransactionForm = () => {
                           )}
                         />
                       </div>
-                      <AddCertificationCardFooter />
+                      <AddCertificationCardFooter
+                        isSubmitting={isSubmitting}
+                      />
                     </div>
                   </RightCardWrapper>
                 </SectionCardWrapper>
