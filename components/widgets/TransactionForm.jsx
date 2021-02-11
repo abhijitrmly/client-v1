@@ -626,7 +626,7 @@ export const CustomerCheckpointValidationCard = ({
       </div>
       )}
       {' '}
-      {!supplierComplianceDataExists && (
+      {!supplierComplianceDataExists && !isMarkedCompliantByCustomer && (
       <div tw="ml-4 space-y-2">
         <div tw="flex items-center">
           <span tw="h-6 flex items-center sm:h-7">

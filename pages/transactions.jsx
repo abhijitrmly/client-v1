@@ -17,7 +17,11 @@ const SupplierTransactionIndex = () => {
       if (userId) {
         const trResult = await TransactionsService.find({
           query: {
-            supplier: '602255a805295f1e02a47b4a',
+            $or: [{
+              supplier: userId,
+            }, {
+              customer: userId,
+            }],
             // @TODO delete the hard coded text
             // supplier: userId,
           },
@@ -35,12 +39,15 @@ const SupplierTransactionIndex = () => {
         transactionsArray={
           transactionData.map(
             ({
-              _id, customerPopulated, createdAt, complianceCheckPoints = [],
+              _id, customerPopulated, createdAt, complianceCheckPoints = [], supplierPopulated,
             }) => ({
-              editLink: _id ? `/supplier/transaction/${_id}` : '/',
+              editLink: (userId === supplierPopulated._id) ? `/supplier/transaction/${_id}` : `/customer/transaction/${_id}`,
               customerName: customerPopulated.name || '',
               customerEmail: customerPopulated.email,
+              supplierName: supplierPopulated.name || '',
+              supplierEmail: supplierPopulated.email,
               createdAtDate: createdAt.split('T')[0],
+              compliantPointStatistics: `${complianceCheckPoints.filter((checkPoint) => (checkPoint.customerComplianceValidation && checkPoint.customerComplianceValidation.isCompliant)).length} checkpoints marked compliant`,
               statistics: `${complianceCheckPoints.length} checkpoints covered`,
             }),
           )
