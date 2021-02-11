@@ -362,6 +362,7 @@ export const CustomComplianceCard = ({
   acceptableAnswers = [],
   complianceCheckpointId,
   values = {},
+  isMarkedCompliantByCustomer = false,
 }) => (
   <div tw="mt-2 mb-4">
     <div tw="ml-4 space-y-2">
@@ -399,9 +400,7 @@ export const CustomComplianceCard = ({
         </div>
       ))
     }
-
           </div>
-
         </div>
         )
       }

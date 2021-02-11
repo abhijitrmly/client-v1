@@ -197,6 +197,7 @@ const SupplierTransactionForm = () => {
                   certificationButtonCallback={
                     () => setCertificationForm(!certificationFormVisibility)
                   }
+                  isSubmitting={isSubmitting}
                 />
                 {
             Object.entries(categories).map(
@@ -255,6 +256,11 @@ const SupplierTransactionForm = () => {
                                       complianceCheckpointDetails.acceptableAnswers
                                     }
                                     values={values}
+                                    isMarkedCompliantByCustomer={
+                                      complianceCheckpointDetails.customerComplianceValidation
+                                      && complianceCheckpointDetails
+                                        .customerComplianceValidation.isCompliant
+                                    }
                                   />
                                 ),
                               )}
