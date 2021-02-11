@@ -537,7 +537,7 @@ export const CustomerCheckpointValidationCard = ({
   validationCheckpointName,
 }) => (
   <>
-    <div tw="ml-4 space-y-2">
+    <div tw="ml-4 mt-4 space-y-2">
       <div tw="text-base">
         <PrimaryLabel
           primaryQuestion={primaryQuestion}
