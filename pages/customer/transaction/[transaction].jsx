@@ -124,7 +124,7 @@ const CustomerTransactionEditForm = () => {
                                       (complianceData.providedAnswers || [])
                                         .map((answerObject) => ({
                                           providedAnswer: (answerObject.value
-                                        || answerObject.valueBoolean),
+                                        || answerObject.valueBoolean.toString()),
                                         }))
                                     }
                                     providedEvidences={

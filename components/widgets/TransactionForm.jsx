@@ -361,7 +361,7 @@ export const NewCertificationAdder = ({
 
 export const CustomComplianceCard = ({
   primaryQuestion,
-  isCompliantWithCertification,
+  isCompliantWithCertification = false,
   acceptableCertificationsArray = [],
   isSelfCertificationEvidenceAllowed = true,
   acceptableAnswers = [],
@@ -432,14 +432,25 @@ export const CustomComplianceCard = ({
 
                 if (!(typeof valueBoolean === 'undefined' || valueBoolean === null)) {
                   return (
-                    <div tw="space-x-2">
-                      <QuestionCheckboxField
-                        name={`${complianceCheckpointId}.acceptableCertificationsObject.answers.${acceptableAnswerId}.valueBoolean`}
-                      />
-                      <SecondaryLabel
-                        id={`${complianceCheckpointId}.acceptableCertificationsObject.answers.${acceptableAnswerId}`}
-                        secondaryQuestion="Is your answer 'Yes'?"
-                      />
+                    <div tw="space-y-1">
+                      <div tw="space-x-2">
+                        <QuestionCheckboxField
+                          name={`${complianceCheckpointId}.acceptableCertificationsObject.answers.${acceptableAnswerId}.valueBoolean`}
+                        />
+                        <SecondaryLabel
+                          id={`${complianceCheckpointId}.acceptableCertificationsObject.answers.${acceptableAnswerId}`}
+                          secondaryQuestion="Is your answer 'Yes'?"
+                        />
+                      </div>
+                      <div>
+                        <SecondaryLabel
+                          secondaryQuestion="Please upload evidence/s for the answer above"
+                        />
+                        <CriterionEvidenceWidget
+                          complianceCheckpointId={complianceCheckpointId}
+                          values={values}
+                        />
+                      </div>
                     </div>
                   );
                 }
