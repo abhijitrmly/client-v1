@@ -22,6 +22,9 @@ const SupplierTransactionIndex = () => {
             }, {
               customer: userId,
             }],
+            $sort: {
+              createdAt: -1,
+            },
             // @TODO delete the hard coded text
             // supplier: userId,
           },

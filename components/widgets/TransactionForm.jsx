@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import 'twin.macro';
@@ -18,7 +19,6 @@ import {
   SecondaryLabel,
   RadioLabel,
   PrimaryText,
-  StyledOption,
 } from '../blocks/DisplayBlocks';
 
 export const PredefinedCriterionCheckbox = ({
@@ -43,7 +43,12 @@ export const PredefinedCriterionCheckbox = ({
 );
 
 export const PredefinedCriterionSecondaryCheckbox = ({
-  name, secondaryQuestion, id, showSecondaryQuestionInput = true, secondaryQuestionInputName, secondaryQuestionInputPlaceholder,
+  name,
+  secondaryQuestion,
+  id,
+  showSecondaryQuestionInput = true,
+  secondaryQuestionInputName,
+  secondaryQuestionInputPlaceholder,
 }) => (
   <div tw="mt-4">
     <div tw="flex items-start">
@@ -371,9 +376,21 @@ export const CustomComplianceCard = ({
           primaryQuestion={primaryQuestion}
         />
       </div>
-      {
+      {isMarkedCompliantByCustomer ? (
+        <div tw="flex items-center">
+          <span tw="h-6 flex items-center sm:h-7">
+            <svg tw="flex-shrink-0 h-4 w-4 text-blue-500" viewBox="0 0 20 20" fill="green">
+              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+            </svg>
+          </span>
+          <p tw="ml-2 text-base">Customer has marked your evidence as compliant.</p>
+        </div>
+      )
+        : (
+          <div tw="ml-4">
+            {
         isCompliantWithCertification && (
-        <div tw="ml-4 space-y-2">
+        <div tw="space-y-2">
           <div tw="flex items-center">
             <span tw="h-6 flex items-center sm:h-7">
               <svg tw="flex-shrink-0 h-4 w-4 text-blue-500" viewBox="0 0 20 20" fill="currentColor">
@@ -384,74 +401,76 @@ export const CustomComplianceCard = ({
           </div>
           <div tw="mt-2">
             {
-      acceptableCertificationsArray.map(({ certificationName, certificationLabel }) => (
-        <div tw="flex mt-1 items-start">
-          <div tw="flex items-center h-5">
-            <QuestionCheckboxField
-              name={certificationName}
-            />
-          </div>
-          <div tw="ml-3 -mt-0.5 text-base">
-            <PrimaryLabel
-              primaryQuestion={certificationLabel}
-              id={certificationName}
-            />
-          </div>
-        </div>
-      ))
-    }
+              acceptableCertificationsArray.map(({ certificationName, certificationLabel }) => (
+                <div tw="flex mt-1 items-start">
+                  <div tw="flex items-center h-5">
+                    <QuestionCheckboxField
+                      name={certificationName}
+                    />
+                  </div>
+                  <div tw="ml-3 -mt-0.5 text-base">
+                    <PrimaryLabel
+                      primaryQuestion={certificationLabel}
+                      id={certificationName}
+                    />
+                  </div>
+                </div>
+              ))
+            }
           </div>
         </div>
         )
       }
-      {
-      isSelfCertificationEvidenceAllowed && (
-        <>
-          {acceptableAnswers.map(
-            (acceptableAnswer) => {
-              const {
-                valueBoolean, label, _id: acceptableAnswerId,
-              } = acceptableAnswer;
+            {
+        isSelfCertificationEvidenceAllowed && !isCompliantWithCertification && (
+          <>
+            {acceptableAnswers.map(
+              (acceptableAnswer) => {
+                const {
+                  valueBoolean, label, _id: acceptableAnswerId,
+                } = acceptableAnswer;
 
-              if (!(typeof valueBoolean === 'undefined' || valueBoolean === null)) {
+                if (!(typeof valueBoolean === 'undefined' || valueBoolean === null)) {
+                  return (
+                    <div tw="space-x-2">
+                      <QuestionCheckboxField
+                        name={`${complianceCheckpointId}.acceptableCertificationsObject.answers.${acceptableAnswerId}.valueBoolean`}
+                      />
+                      <SecondaryLabel
+                        id={`${complianceCheckpointId}.acceptableCertificationsObject.answers.${acceptableAnswerId}`}
+                        secondaryQuestion="Is your answer 'Yes'?"
+                      />
+                    </div>
+                  );
+                }
+
                 return (
-                  <div tw="space-x-2">
-                    <QuestionCheckboxField
-                      name={`${complianceCheckpointId}.acceptableCertificationsObject.answers.${acceptableAnswerId}.valueBoolean`}
+                  <div>
+                    <div tw="block">
+                      <PrimaryLabel
+                        id={`${complianceCheckpointId}.acceptableCertificationsObject.answers.${acceptableAnswerId}`}
+                        primaryQuestion={`Enter the answer in ${label}`}
+                      />
+                    </div>
+                    <StyledInputField
+                      name={`${complianceCheckpointId}.acceptableCertificationsObject.answers.${acceptableAnswerId}.value`}
                     />
                     <SecondaryLabel
-                      id={`${complianceCheckpointId}.acceptableCertificationsObject.answers.${acceptableAnswerId}`}
-                      secondaryQuestion="Is your answer 'Yes'?"
+                      secondaryQuestion="Please upload evidence/s for the answer above"
+                    />
+                    <CriterionEvidenceWidget
+                      complianceCheckpointId={complianceCheckpointId}
+                      values={values}
                     />
                   </div>
                 );
-              }
-
-              return (
-                <div>
-                  <div tw="block">
-                    <PrimaryLabel
-                      id={`${complianceCheckpointId}.acceptableCertificationsObject.answers.${acceptableAnswerId}`}
-                      primaryQuestion={`Enter the answer in ${label}`}
-                    />
-                  </div>
-                  <StyledInputField
-                    name={`${complianceCheckpointId}.acceptableCertificationsObject.answers.${acceptableAnswerId}.value`}
-                  />
-                </div>
-              );
-            },
-          )}
-        </>
-      )
-    }
-      <SecondaryLabel
-        secondaryQuestion="Please upload evidence/s for the answer above"
-      />
-      <CriterionEvidenceWidget
-        complianceCheckpointId={complianceCheckpointId}
-        values={values}
-      />
+              },
+            )}
+          </>
+        )
+      }
+          </div>
+        )}
     </div>
   </div>
 );
@@ -544,12 +563,13 @@ export const CustomerCheckpointValidationCard = ({
           primaryQuestion={primaryQuestion}
         />
       </div>
-      {
+      <div tw="ml-4 space-y-1">
+        {
         isMarkedCompliantByCustomer && (
-        <div tw="ml-4 space-y-2">
+        <div tw="space-y-2">
           <div tw="flex items-center">
             <span tw="h-6 flex items-center sm:h-7">
-              <svg tw="flex-shrink-0 h-4 w-4 text-blue-500" viewBox="0 0 20 20" fill="currentColor">
+              <svg tw="flex-shrink-0 h-4 w-4 text-blue-500" viewBox="0 0 20 20" fill="green">
                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
               </svg>
             </span>
@@ -558,16 +578,18 @@ export const CustomerCheckpointValidationCard = ({
         </div>
         )
       }
-      {providedExternalCertifications.length > 0
+        {
+        providedExternalCertifications.length > 0
         && (
         <PrimarySubtext
           primaryQuestionSubtext="External certifications provided by supplier-"
         />
-        )}
-      {
+        )
+        }
+        {
       providedExternalCertifications.map(({ certificationLabel }) => (
         <div tw="flex mt-1 items-start">
-          <div tw="ml-3 -mt-0.5 text-base">
+          <div tw="-mt-0.5 text-base">
             <PrimaryText
               primaryText={certificationLabel}
             />
@@ -575,30 +597,32 @@ export const CustomerCheckpointValidationCard = ({
         </div>
       ))
     }
-      {providedEvidences.length > 0
+        {providedEvidences.length > 0
         && (
-        <PrimarySubtext
-          primaryQuestionSubtext="Evidences for self-auditing claim provided by supplier-"
-        />
-        )}
-      {
-      providedEvidences.map(({ evidenceUrl }) => (
-        <div tw="flex mt-1 items-start">
-          <div tw="ml-3 -mt-0.5 text-base">
-            <PrimaryText
-              primaryText={evidenceUrl}
+          <div>
+            <PrimarySubtext
+              primaryQuestionSubtext="Evidences for self-auditing claim provided by supplier-"
             />
+            {
+          providedEvidences.map(({ evidenceUrl }) => (
+            <div tw="flex mt-0.5 items-start">
+              <div tw="-mt-0.5 text-base">
+                <PrimaryText
+                  primaryText={evidenceUrl}
+                />
+              </div>
+            </div>
+          ))
+        }
           </div>
-        </div>
-      ))
-    }
-      {providedAnswers.length > 0
+        )}
+        {providedAnswers.length > 0
         && (
         <PrimarySubtext
           primaryQuestionSubtext="Answers for self-auditing claims provided by supplier-"
         />
         )}
-      {
+        {
       providedAnswers.map(({ providedAnswer }) => (
         <div tw="flex mt-1 items-start">
           <div tw="ml-3 -mt-0.5 text-base">
@@ -609,38 +633,39 @@ export const CustomerCheckpointValidationCard = ({
         </div>
       ))
     }
-      {(!isMarkedCompliantByCustomer) && (
-      <div tw="flex mt-1 items-start">
-        <div tw="flex items-center h-5">
-          <QuestionCheckboxField
-            name={validationCheckpointName}
-          />
+        {(!isMarkedCompliantByCustomer) && (
+        <div tw="flex mt-1 items-start">
+          <div tw="flex items-center h-5">
+            <QuestionCheckboxField
+              name={validationCheckpointName}
+            />
+          </div>
+          <div tw="ml-3 -mt-0.5 text-base">
+            <PrimaryLabel
+              primaryQuestion="Mark this checkbox to accept compliance for this criterion by supplier"
+              id={validationCheckpointName}
+            />
+          </div>
         </div>
-        <div tw="ml-3 -mt-0.5 text-base">
-          <PrimaryLabel
-            primaryQuestion="Mark this checkbox to accept compliance for this criterion by supplier"
-            id={validationCheckpointName}
-          />
+        )}
+        {' '}
+        {!supplierComplianceDataExists && !isMarkedCompliantByCustomer && (
+        <div tw="space-y-2">
+          <div tw="flex items-center">
+            <span tw="h-6 flex items-center sm:h-7">
+              <svg tw="flex-shrink-0 h-4 w-4 text-blue-900" viewBox="0 0 20 20" fill="currentColor">
+                <path
+                  fillRule="evenodd"
+                  d="M11.088,2.542c0.063-0.146,0.103-0.306,0.103-0.476c0-0.657-0.534-1.19-1.19-1.19c-0.657,0-1.19,0.533-1.19,1.19c0,0.17,0.038,0.33,0.102,0.476c-4.085,0.535-7.243,4.021-7.243,8.252c0,4.601,3.73,8.332,8.332,8.332c4.601,0,8.331-3.73,8.331-8.332C18.331,6.562,15.173,3.076,11.088,2.542z M10,1.669c0.219,0,0.396,0.177,0.396,0.396S10.219,2.462,10,2.462c-0.22,0-0.397-0.177-0.397-0.396S9.78,1.669,10,1.669z M10,18.332c-4.163,0-7.538-3.375-7.538-7.539c0-4.163,3.375-7.538,7.538-7.538c4.162,0,7.538,3.375,7.538,7.538C17.538,14.957,14.162,18.332,10,18.332z M10.386,9.26c0.002-0.018,0.011-0.034,0.011-0.053V5.24c0-0.219-0.177-0.396-0.396-0.396c-0.22,0-0.397,0.177-0.397,0.396v3.967c0,0.019,0.008,0.035,0.011,0.053c-0.689,0.173-1.201,0.792-1.201,1.534c0,0.324,0.098,0.625,0.264,0.875c-0.079,0.014-0.155,0.043-0.216,0.104l-2.244,2.244c-0.155,0.154-0.155,0.406,0,0.561s0.406,0.154,0.561,0l2.244-2.242c0.061-0.062,0.091-0.139,0.104-0.217c0.251,0.166,0.551,0.264,0.875,0.264c0.876,0,1.587-0.711,1.587-1.587C11.587,10.052,11.075,9.433,10.386,9.26z M10,11.586c-0.438,0-0.793-0.354-0.793-0.792c0-0.438,0.355-0.792,0.793-0.792c0.438,0,0.793,0.355,0.793,0.792C10.793,11.232,10.438,11.586,10,11.586z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </span>
+            <p tw="ml-2 text-xs">Compliance data addition is pending from supplier.</p>
+          </div>
         </div>
+        )}
       </div>
-      )}
-      {' '}
-      {!supplierComplianceDataExists && !isMarkedCompliantByCustomer && (
-      <div tw="ml-4 space-y-2">
-        <div tw="flex items-center">
-          <span tw="h-6 flex items-center sm:h-7">
-            <svg tw="flex-shrink-0 h-4 w-4 text-blue-900" viewBox="0 0 20 20" fill="currentColor">
-              <path
-                fillRule="evenodd"
-                d="M11.088,2.542c0.063-0.146,0.103-0.306,0.103-0.476c0-0.657-0.534-1.19-1.19-1.19c-0.657,0-1.19,0.533-1.19,1.19c0,0.17,0.038,0.33,0.102,0.476c-4.085,0.535-7.243,4.021-7.243,8.252c0,4.601,3.73,8.332,8.332,8.332c4.601,0,8.331-3.73,8.331-8.332C18.331,6.562,15.173,3.076,11.088,2.542z M10,1.669c0.219,0,0.396,0.177,0.396,0.396S10.219,2.462,10,2.462c-0.22,0-0.397-0.177-0.397-0.396S9.78,1.669,10,1.669z M10,18.332c-4.163,0-7.538-3.375-7.538-7.539c0-4.163,3.375-7.538,7.538-7.538c4.162,0,7.538,3.375,7.538,7.538C17.538,14.957,14.162,18.332,10,18.332z M10.386,9.26c0.002-0.018,0.011-0.034,0.011-0.053V5.24c0-0.219-0.177-0.396-0.396-0.396c-0.22,0-0.397,0.177-0.397,0.396v3.967c0,0.019,0.008,0.035,0.011,0.053c-0.689,0.173-1.201,0.792-1.201,1.534c0,0.324,0.098,0.625,0.264,0.875c-0.079,0.014-0.155,0.043-0.216,0.104l-2.244,2.244c-0.155,0.154-0.155,0.406,0,0.561s0.406,0.154,0.561,0l2.244-2.242c0.061-0.062,0.091-0.139,0.104-0.217c0.251,0.166,0.551,0.264,0.875,0.264c0.876,0,1.587-0.711,1.587-1.587C11.587,10.052,11.075,9.433,10.386,9.26z M10,11.586c-0.438,0-0.793-0.354-0.793-0.792c0-0.438,0.355-0.792,0.793-0.792c0.438,0,0.793,0.355,0.793,0.792C10.793,11.232,10.438,11.586,10,11.586z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </span>
-          <p tw="ml-2 text-xs">Compliance data addition is pending from supplier.</p>
-        </div>
-      </div>
-      )}
     </div>
   </>
 );

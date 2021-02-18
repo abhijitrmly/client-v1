@@ -73,7 +73,11 @@ const SupplierTransactionForm = () => {
 
   defaultComplianceFormValues = useMemo(
     () => complianceCheckPoints.reduce((accumulator, currentValue) => {
-      const { _id: complianceId, businessCriterionDetails = {} } = currentValue;
+      const {
+        _id: complianceId,
+        businessCriterionDetails = {},
+        customerComplianceValidation = {},
+      } = currentValue;
       const {
         validExternalCertifications = [],
         primaryQuestion,
@@ -99,6 +103,8 @@ const SupplierTransactionForm = () => {
           primaryQuestion,
           category,
           ...businessCriterionDetails,
+          customerComplianceValidation: (
+            customerComplianceValidation && customerComplianceValidation.isCompliant),
           isSelfCertificationEvidenceAllowed: !!isSelfCertificationEvidenceAllowed.value,
         },
       });
@@ -238,7 +244,8 @@ const SupplierTransactionForm = () => {
                                     acceptableCertificationsArray={
                                       Object
                                         .keys(
-                                          complianceCheckpointDetails.acceptableCertificationsObject,
+                                          complianceCheckpointDetails
+                                            .acceptableCertificationsObject,
                                         )
                                         .map(
                                           (certificationId) => ({
@@ -258,8 +265,6 @@ const SupplierTransactionForm = () => {
                                     values={values}
                                     isMarkedCompliantByCustomer={
                                       complianceCheckpointDetails.customerComplianceValidation
-                                      && complianceCheckpointDetails
-                                        .customerComplianceValidation.isCompliant
                                     }
                                   />
                                 ),
