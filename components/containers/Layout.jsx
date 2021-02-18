@@ -2,6 +2,7 @@
 import React from 'react';
 import 'twin.macro';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 import { useAuth } from '../../store';
 
@@ -41,13 +42,15 @@ export const NavBar = () => {
                 </div>
               </div>
               <div tw="hidden md:block md:ml-10 md:pr-4 md:space-x-8">
-                <a href="#" tw="font-medium text-gray-500 hover:text-gray-900">Product</a>
-
-                <a href="#" tw="font-medium text-gray-500 hover:text-gray-900">Features</a>
-
+                <Link href="/dashboard" passHref>
+                  <a tw="font-medium text-gray-500 hover:text-gray-900">Dashboard</a>
+                </Link>
+                <Link href="/transactions" passHref>
+                  <a tw="font-medium text-gray-500 hover:text-gray-900">Transactions</a>
+                </Link>
                 <a href="#" tw="font-medium text-gray-500 hover:text-gray-900">Marketplace</a>
 
-                <a href="#" tw="font-medium text-gray-500 hover:text-gray-900">Company</a>
+                <a href="#" tw="font-medium text-gray-500 hover:text-gray-900">Certifications</a>
 
                 {!user && (<a href="#" tw="font-medium text-indigo-600 hover:text-indigo-500">Log in</a>)}
               </div>

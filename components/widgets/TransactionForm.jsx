@@ -445,23 +445,27 @@ export const CustomComplianceCard = ({
                 }
 
                 return (
-                  <div>
+                  <div tw="space-y-1">
                     <div tw="block">
                       <PrimaryLabel
                         id={`${complianceCheckpointId}.acceptableCertificationsObject.answers.${acceptableAnswerId}`}
                         primaryQuestion={`Enter the answer in ${label}`}
                       />
                     </div>
-                    <StyledInputField
-                      name={`${complianceCheckpointId}.acceptableCertificationsObject.answers.${acceptableAnswerId}.value`}
-                    />
-                    <SecondaryLabel
-                      secondaryQuestion="Please upload evidence/s for the answer above"
-                    />
-                    <CriterionEvidenceWidget
-                      complianceCheckpointId={complianceCheckpointId}
-                      values={values}
-                    />
+                    <div>
+                      <StyledInputField
+                        name={`${complianceCheckpointId}.acceptableCertificationsObject.answers.${acceptableAnswerId}.value`}
+                      />
+                    </div>
+                    <div>
+                      <SecondaryLabel
+                        secondaryQuestion="Please upload evidence/s for the answer above"
+                      />
+                      <CriterionEvidenceWidget
+                        complianceCheckpointId={complianceCheckpointId}
+                        values={values}
+                      />
+                    </div>
                   </div>
                 );
               },
@@ -581,22 +585,43 @@ export const CustomerCheckpointValidationCard = ({
         {
         providedExternalCertifications.length > 0
         && (
-        <PrimarySubtext
-          primaryQuestionSubtext="External certifications provided by supplier-"
-        />
+          <div>
+            <PrimarySubtext
+              primaryQuestionSubtext="External certifications provided by supplier-"
+            />
+            {
+              providedExternalCertifications.map(({ certificationLabel }) => (
+                <div tw="flex mt-1 items-start">
+                  <div tw="-mt-0.5 text-base">
+                    <PrimaryText
+                      primaryText={certificationLabel}
+                    />
+                  </div>
+                </div>
+              ))
+            }
+          </div>
         )
         }
-        {
-      providedExternalCertifications.map(({ certificationLabel }) => (
-        <div tw="flex mt-1 items-start">
-          <div tw="-mt-0.5 text-base">
-            <PrimaryText
-              primaryText={certificationLabel}
+        {providedAnswers.length > 0
+        && (
+          <div>
+            <PrimarySubtext
+              primaryQuestionSubtext="Answers for self-auditing claims provided by supplier-"
             />
+            {
+          providedAnswers.map(({ providedAnswer }) => (
+            <div tw="flex mt-1 items-start">
+              <div tw="-mt-0.5 text-base">
+                <PrimaryText
+                  primaryText={providedAnswer}
+                />
+              </div>
+            </div>
+          ))
+        }
           </div>
-        </div>
-      ))
-    }
+        )}
         {providedEvidences.length > 0
         && (
           <div>
@@ -616,25 +641,8 @@ export const CustomerCheckpointValidationCard = ({
         }
           </div>
         )}
-        {providedAnswers.length > 0
-        && (
-        <PrimarySubtext
-          primaryQuestionSubtext="Answers for self-auditing claims provided by supplier-"
-        />
-        )}
-        {
-      providedAnswers.map(({ providedAnswer }) => (
-        <div tw="flex mt-1 items-start">
-          <div tw="ml-3 -mt-0.5 text-base">
-            <PrimaryText
-              primaryText={providedAnswer}
-            />
-          </div>
-        </div>
-      ))
-    }
         {(!isMarkedCompliantByCustomer) && (
-        <div tw="flex mt-1 items-start">
+        <div tw="flex mt-1.5 items-start">
           <div tw="flex items-center h-5">
             <QuestionCheckboxField
               name={validationCheckpointName}

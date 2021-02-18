@@ -16,6 +16,7 @@ import {
 import {
   CustomerViewPageHeader,
 } from '../../../components/blocks/DisplayBlocks';
+import { SuccessPatchSupplierCard } from '../../../components/blocks/MessageCards';
 
 const certificationObject = certifications.reduce(
   (accumulator, currentValue) => (
@@ -29,6 +30,7 @@ const CustomerTransactionEditForm = () => {
   const { transaction: transactionId } = router.query;
 
   const [transactionData, setTransactionData] = useState({});
+  const [showTransactionPatchCard, setTransactionPatchVisibility] = useState(false);
 
   const TransactionsService = useService('transaction');
 
@@ -44,6 +46,12 @@ const CustomerTransactionEditForm = () => {
 
   const { complianceCheckPoints = [] } = transactionData;
 
+  if (showTransactionPatchCard) {
+    return (
+      <SuccessPatchSupplierCard />
+    );
+  }
+
   return (
     <div>
       <Head>
@@ -58,6 +66,7 @@ const CustomerTransactionEditForm = () => {
               await TransactionsService.patch(transactionId, {
                 outgoingComplianceValidationData: { ...values },
               });
+              setTransactionPatchVisibility(true);
             }}
           >
             {() => (

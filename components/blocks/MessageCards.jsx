@@ -41,11 +41,11 @@ export const SuccessPatchSupplierCard = ({ transactionListLink }) => (
       </svg>
     </div>
     <div tw="mb-8">
-      <p>Your information has been saved and will be conveyed to customer.</p>
+      <p>Your information has been saved and will be conveyed to the other party.</p>
     </div>
     <div tw="flex justify-center">
       <button type="button" tw="text-white py-2 px-4 rounded bg-blue-500 hover:bg-blue-800">
-        <Link href="/supplier/transactions">
+        <Link href="/transactions">
           View Transaction List
         </Link>
       </button>
