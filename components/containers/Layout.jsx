@@ -49,9 +49,9 @@ export const NavBar = () => {
                   <a tw="font-medium text-gray-500 hover:text-gray-900">Transactions</a>
                 </Link>
                 <a href="#" tw="font-medium text-gray-500 hover:text-gray-900">Marketplace</a>
-
-                <a href="#" tw="font-medium text-gray-500 hover:text-gray-900">Certifications</a>
-
+                <Link href="/know-your-certification/gots" passHref>
+                  <a tw="font-medium text-gray-500 hover:text-gray-900">Certifications</a>
+                </Link>
                 {!user && (<a href="#" tw="font-medium text-indigo-600 hover:text-indigo-500">Log in</a>)}
               </div>
             </nav>
