@@ -11,7 +11,7 @@ const Dashboard = () => (
       ctaLinkHref="/transactions"
     />
     <DashboardCTACard
-      message="Want to create your own protocol?"
+      message="Want to create new protocol?"
       buttonLabel="New transaction"
       ctaLinkHref="/customer/new"
     />

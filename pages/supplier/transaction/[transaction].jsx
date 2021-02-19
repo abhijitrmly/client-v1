@@ -234,6 +234,7 @@ const SupplierTransactionForm = () => {
                               {categoryCompliancePoints.map(
                                 ([complianceCheckpointId, complianceCheckpointDetails], index) => (
                                   <CustomComplianceCard
+                                    key={complianceCheckpointId}
                                     primaryQuestion={`${index + 1}. ${complianceCheckpointDetails.primaryQuestion}`}
                                     isCompliantWithCertification={
                                       Object

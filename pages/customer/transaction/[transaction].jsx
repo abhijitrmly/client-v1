@@ -110,6 +110,7 @@ const CustomerTransactionEditForm = () => {
                                   _id: complianceCheckpointId,
                                 }, index) => (
                                   <CustomerCheckpointValidationCard
+                                    key={complianceCheckpointId}
                                     primaryQuestion={`${index + 1}. ${businessCriterionDetails.primaryQuestion}`}
                                     isMarkedCompliantByCustomer={
                                       customerComplianceValidation
