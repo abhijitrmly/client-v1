@@ -6,7 +6,7 @@ import { DashboardCTACard } from '../components/blocks/DisplayBlocks';
 const Dashboard = () => (
   <div tw="grid grid-cols-2 gap-8">
     <DashboardCTACard
-      message="You have 2 supplier transactions"
+      message="You have 2 open transactions"
       buttonLabel="View your transactions"
       ctaLinkHref="/transactions"
     />

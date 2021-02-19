@@ -31,7 +31,7 @@ const certifications = [
       'Beverages',
     ],
     trustworthiness: 'MEDIUM',
-    name: 'Fair Trade',
+    name: 'Fair Trade Cotton',
     awardedBy: 'Flo-Cert',
     description: 'Leading international standard for ethical and sustainable production',
     createdAt: '2020-12-31T18:29:31.639Z',

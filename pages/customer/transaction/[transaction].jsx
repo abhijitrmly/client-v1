@@ -69,9 +69,11 @@ const CustomerTransactionEditForm = () => {
               setTransactionPatchVisibility(true);
             }}
           >
-            {() => (
+            {({ isSubmitting }) => (
               <Form>
-                <CustomerViewPageHeader />
+                <CustomerViewPageHeader
+                  isSubmitting={isSubmitting}
+                />
                 {
             Object.entries(categories).map(
               ([categoryName, categoryDetails]) => {
